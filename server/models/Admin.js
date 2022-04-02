@@ -15,6 +15,11 @@ const adminSchema = new Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    required: true,
+    default: 'admin',
+  },
 });
 
 adminSchema.pre('save', async function (next) {

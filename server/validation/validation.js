@@ -22,7 +22,7 @@ const ValidateLogin = (data) => {
   };
 };
 
-const validateMenteeSignUp = (data) => {
+const validateSignUp = (data) => {
   let errors = {};
 
   data.fullname = !isEmpty(data.fullname) ? data.fullname : '';
@@ -52,5 +52,5 @@ const validateMenteeSignUp = (data) => {
 
 module.exports = {
   ValidateLogin,
-  validateMenteeSignUp,
+  validateSignUp,
 };

@@ -10,6 +10,8 @@ const { MONGODB, NODE_ENV, PORT } = require('./config.js');
 
 const app = express();
 
+app.use(express.json());
+
 if (NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }

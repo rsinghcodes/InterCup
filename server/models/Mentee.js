@@ -20,16 +20,14 @@ const menteeSchema = new Schema({
     default: false,
   },
   global_rank: {
-    type: String,
-    default: '0',
+    type: Number,
+    default: 0,
   },
   profession: {
     type: String,
-    default: 'Not available',
   },
   college: {
     type: String,
-    default: 'Not available',
   },
 });
 

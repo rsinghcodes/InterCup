@@ -1,17 +1,14 @@
 const express = require('express');
 
 const Mentee = require('../models/Mentee');
-const {
-  ValidateLogin,
-  validateMenteeSignUp,
-} = require('../validation/validation');
-const createToken = require('../middleware/createToken');
+const { ValidateLogin, validateSignUp } = require('../validation/validation');
+const { createToken } = require('../middleware/token');
 
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const { errors, isValid } = validateMenteeSignUp(req.body);
+    const { errors, isValid } = validateSignUp(req.body);
 
     if (!isValid) {
       return res.status(400).json(errors);
