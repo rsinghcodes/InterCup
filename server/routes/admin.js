@@ -3,6 +3,7 @@ const express = require('express');
 const Admin = require('../models/Admin');
 const { ValidateLogin, validateSignUp } = require('../validation/validation');
 const { createToken } = require('../middleware/token');
+const authenticatedMiddleware = require('../middleware/authenticated');
 
 const router = express.Router();
 
@@ -64,6 +65,20 @@ router.post('/login', async (req, res) => {
     } else {
       return res.status(400).json({ password: 'Password is incorrect' });
     }
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Server Error',
+    });
+  }
+});
+
+router.get('/profile', authenticatedMiddleware, async (req, res) => {
+  try {
+    const profile = await Admin.findById(req.user.id)
+      .select('-password')
+      .exec();
+
+    return res.status(200).json(profile);
   } catch (error) {
     return res.status(500).json({
       error: 'Server Error',

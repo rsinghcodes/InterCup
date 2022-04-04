@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const menteeSchema = new Schema({
+const userSchema = new Schema({
   fullname: {
     type: String,
     required: true,
@@ -31,7 +31,7 @@ const menteeSchema = new Schema({
   },
 });
 
-menteeSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
   }
@@ -44,8 +44,8 @@ menteeSchema.pre('save', async function (next) {
   next();
 });
 
-menteeSchema.methods.isValidPassword = async function (password) {
+userSchema.methods.isValidPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-module.exports = model('Mentee', menteeSchema);
+module.exports = model('User', userSchema);

@@ -7,7 +7,12 @@
     "start": "node index",
     "dev": "nodemon index"
   },
-  "keywords": [],
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "bcryptjs",
+    "jwt"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {

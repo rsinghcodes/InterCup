@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const connect = require('./database/connect');
 // routes
 const admin = require('./routes/admin');
-const mentee = require('./routes/mentee');
+const user = require('./routes/user');
 
 const { MONGODB, NODE_ENV, PORT } = require('./config.js');
 
@@ -17,7 +17,7 @@ if (NODE_ENV === 'development') {
 }
 
 app.use('/api/admin', admin);
-app.use('/api/mentee', mentee);
+app.use('/api/user', user);
 
 app.listen(PORT, async () => {
   console.log(`Server running on ${NODE_ENV} mode on port ${PORT}`);
