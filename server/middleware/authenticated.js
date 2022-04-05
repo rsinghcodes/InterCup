@@ -3,8 +3,7 @@ const jwt = require('jsonwebtoken');
 const { verifyToken } = require('./token');
 
 const Admin = require('../models/Admin');
-const Mentor = require('../models/Mentor');
-const Mentee = require('../models/Mentee');
+const User = require('../models/User');
 
 async function authenticatedMiddleware(req, res, next) {
   const bearer = req.headers.authorization;
@@ -23,8 +22,7 @@ async function authenticatedMiddleware(req, res, next) {
 
     const user =
       (await Admin.findById(payload.id).select('-password').exec()) ||
-      (await Mentor.findById(payload.id).select('-password').exec()) ||
-      (await Mentee.findById(payload.id).select('-password').exec());
+      (await User.findById(payload.id).select('-password').exec());
 
     if (!user) {
       return res.status(403).send({ message: 'Unauthorised' });
