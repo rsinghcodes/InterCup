@@ -50,7 +50,31 @@ const validateSignUp = (data) => {
   };
 };
 
+const validateQuestionInput = (data) => {
+  let errors = {};
+
+  data.topic = !isEmpty(data.topic) ? data.topic : '';
+  data.question = !isEmpty(data.question) ? data.question : '';
+  data.answer = !isEmpty(data.answer) ? data.answer : '';
+
+  if (Validator.isEmpty(data.topic)) {
+    errors.topic = 'Enter topic of question';
+  }
+  if (Validator.isEmpty(data.question)) {
+    errors.question = 'Question field is required';
+  }
+  if (Validator.isEmpty(data.answer)) {
+    errors.answer = 'Answer field is required';
+  }
+
+  return {
+    errors,
+    isValid: isEmpty(errors),
+  };
+};
+
 module.exports = {
   ValidateLogin,
   validateSignUp,
+  validateQuestionInput,
 };

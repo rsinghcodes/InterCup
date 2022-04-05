@@ -6,6 +6,7 @@ const connect = require('./database/connect');
 const admin = require('./routes/admin');
 const user = require('./routes/user');
 const auth = require('./routes/auth');
+const questions = require('./routes/questions');
 
 const { MONGODB, NODE_ENV, PORT } = require('./config.js');
 
@@ -20,6 +21,7 @@ if (NODE_ENV === 'development') {
 app.use('/api/admin', admin);
 app.use('/api/user', user);
 app.use('/auth/user', auth);
+app.use('/api/questions', questions);
 
 app.listen(PORT, async () => {
   console.log(`Server running on ${NODE_ENV} mode on port ${PORT}`);

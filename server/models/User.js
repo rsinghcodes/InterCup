@@ -29,6 +29,11 @@ const userSchema = new Schema({
   college: {
     type: String,
   },
+  role: {
+    type: String,
+    required: true,
+    default: 'user',
+  },
 });
 
 userSchema.pre('save', async function (next) {
