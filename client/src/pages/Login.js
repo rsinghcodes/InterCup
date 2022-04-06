@@ -28,9 +28,6 @@ const Login = () => {
   return (
     <Box display="flex">
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }} elevation={0}>
-        <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-          Hi, Welcome Back
-        </Typography>
         <img src="/assets/images/illustration_login.png" alt="login" />
       </SectionStyle>
       <Container maxWidth="sm">

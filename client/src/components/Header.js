@@ -78,9 +78,13 @@ export default function Header() {
             />
           </Search>
           <Button
-            color="inherit"
-            sx={{ marginLeft: '1rem' }}
             variant="outlined"
+            color="inherit"
+            disableElevation
+            disableRipple
+            sx={{
+              borderRadius: '5px',
+            }}
             component={Link}
             to="/user/accounts/login"
           >

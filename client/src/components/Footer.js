@@ -66,7 +66,7 @@ const Footer = () => {
           <Link
             variant="subtitle1"
             component={RouterLink}
-            to="/"
+            to="/topics/practice/"
             underline="hover"
             display="block"
             color="white"
@@ -77,7 +77,7 @@ const Footer = () => {
           <Link
             variant="subtitle1"
             component={RouterLink}
-            to="/"
+            to="/topics/practice/"
             underline="hover"
             display="block"
             color="white"

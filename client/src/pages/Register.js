@@ -30,9 +30,6 @@ export default function Register() {
   return (
     <Box display="flex">
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }} elevation={0}>
-        <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-          Register new account
-        </Typography>
         <img alt="register" src="/assets/images/illustration_login.png" />
       </SectionStyle>
 
@@ -43,7 +40,7 @@ export default function Register() {
               Get started absolutely free.
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              Free forever. No credit card needed.
+              Register free forever.
             </Typography>
           </Box>
 

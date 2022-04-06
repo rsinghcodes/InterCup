@@ -43,7 +43,7 @@ const Home = () => {
               px: 6,
               py: 1,
               mt: 3,
-              fontSize: { xs: '1rem' },
+              fontSize: { xs: '0.8rem', lg: '1rem' },
               textTransform: 'none',
               borderRadius: '5px',
               boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
@@ -108,7 +108,7 @@ const Home = () => {
             px: 6,
             py: 1,
             mt: 3,
-            fontSize: { xs: '1rem' },
+            fontSize: { xs: '0.8rem', lg: '1rem' },
             textTransform: 'none',
             borderRadius: '5px',
             boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
@@ -129,13 +129,19 @@ const Home = () => {
       >
         <Grid container justifyContent="center" alignItems="center" gap={4}>
           <Grid item xs={12} md={3}>
-            <HomeCard />
+            <HomeCard heading="Practice quizzes">
+              Practice quizzes and share with friends.
+            </HomeCard>
           </Grid>
           <Grid item xs={12} md={3}>
-            <HomeCard />
+            <HomeCard heading="Interviewer's Favorite questions">
+              Practice the most Favorite questions asked by the interviewer.
+            </HomeCard>
           </Grid>
           <Grid item xs={12} md={3}>
-            <HomeCard />
+            <HomeCard heading="Complete Interview Questions">
+              Be prepared for all types of questions.
+            </HomeCard>
           </Grid>
         </Grid>
         <Typography

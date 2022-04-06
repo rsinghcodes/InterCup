@@ -25,7 +25,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   )} 0%, ${alpha(theme.palette.primary.dark, 0.24)} 100%)`,
 }));
 
-const HomeCard = () => {
+const HomeCard = ({ heading, children }) => {
   return (
     <RootStyle>
       <IconWrapperStyle>
@@ -36,11 +36,9 @@ const HomeCard = () => {
           height={24}
         />
       </IconWrapperStyle>
-      <Typography variant="h6">
-        Practice quizzes and share with friends
-      </Typography>
+      <Typography variant="h6">{heading}</Typography>
       <Typography variant="subtitle1" sx={{ opacity: 0.72 }} mt={2}>
-        Practice quizzes and share with friends.
+        {children}
       </Typography>
     </RootStyle>
   );
