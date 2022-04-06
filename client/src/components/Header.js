@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -80,6 +81,8 @@ export default function Header() {
             color="inherit"
             sx={{ marginLeft: '1rem' }}
             variant="outlined"
+            component={Link}
+            to="/user/accounts/login"
           >
             Login
           </Button>

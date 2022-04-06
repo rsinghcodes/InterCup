@@ -1,12 +1,11 @@
-import {
-  Button,
-  Container,
-  createTheme,
-  Grid,
-  ThemeProvider,
-  Typography,
-} from '@mui/material';
+import { Container, createTheme, ThemeProvider } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   const theme = createTheme({
@@ -20,55 +19,16 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ScrollToTop />
       <Header />
       <Container>
-        <Grid container justifyContent="center" alignItems="center">
-          <Grid item xs={12} md={6}>
-            <img
-              src="/assets/images/hero-main.png"
-              alt="Hero main"
-              width="100%"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography
-              variant="h3"
-              component="h3"
-              sx={{ fontWeight: 600, display: { xs: 'none', md: 'block' } }}
-            >
-              Prepare for Coding Interviews
-            </Typography>
-            <Typography
-              variant="h4"
-              component="h4"
-              sx={{ fontWeight: 600, display: { xs: 'block', md: 'none' } }}
-            >
-              Prepare for Coding Interviews
-            </Typography>
-            <Typography variant="h6" component="h6" mt={2}>
-              Most common interview theory questions. Check yourself and prepare
-              for upcomming interviews.
-            </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              disableElevation
-              disableRipple
-              sx={{
-                px: { xs: 6, sm: 8 },
-                py: { xs: 1, sm: 1.5 },
-                mt: 3,
-                fontSize: { xs: '1.2rem', sm: '1.5rem' },
-                textTransform: 'none',
-                borderRadius: '10px',
-                boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
-              }}
-            >
-              Get Started
-            </Button>
-          </Grid>
-        </Grid>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/user/accounts/login" element={<Login />} />
+          <Route path="/user/accounts/register" element={<Register />} />
+        </Routes>
       </Container>
+      <Footer />
     </ThemeProvider>
   );
 }
