@@ -10,7 +10,6 @@ const Footer = () => {
         bgcolor: '#3A3845',
         color: '#fff',
         p: { xs: 2, md: 4, lg: 10 },
-        mt: { xs: 3, lg: 0 },
       }}
       width="100%"
     >

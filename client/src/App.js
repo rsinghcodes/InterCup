@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ScrollToTop from './components/ScrollToTop';
 import Topics from './pages/Topics';
+import NotFound from './pages/NotFound';
 
 function App() {
   const theme = createTheme({
@@ -25,6 +26,7 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
           <Route path="/topics/practice/" element={<Topics />} />
           <Route path="/user/accounts/login" element={<Login />} />
           <Route path="/user/accounts/register" element={<Register />} />

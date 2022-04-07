@@ -125,7 +125,7 @@ const Home = () => {
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
-        sx={{ height: { xs: 'auto', lg: '80vh' }, mt: { xs: 5, lg: 0 } }}
+        sx={{ minHeight: { xs: 'auto', lg: '80vh' }, mt: { xs: 5, lg: 0 } }}
       >
         <Grid container justifyContent="center" alignItems="center" gap={4}>
           <Grid item xs={12} md={3}>
