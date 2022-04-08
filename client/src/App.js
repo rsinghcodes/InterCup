@@ -1,13 +1,17 @@
+import { lazy, Suspense } from 'react';
 import { Container, createTheme, ThemeProvider } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
+// components
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Spinner from './components/Spinner';
 import ScrollToTop from './components/ScrollToTop';
-import Topics from './pages/Topics';
-import NotFound from './pages/NotFound';
+// pages
+const Home = lazy(() => import('./pages/Home'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const Topics = lazy(() => import('./pages/Topics'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
   const theme = createTheme({
@@ -24,13 +28,15 @@ function App() {
       <ScrollToTop />
       <Header />
       <Container>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/topics/practice/" element={<Topics />} />
-          <Route path="/user/accounts/login" element={<Login />} />
-          <Route path="/user/accounts/register" element={<Register />} />
-        </Routes>
+        <Suspense fallback={<Spinner />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/topics/practice/" element={<Topics />} />
+            <Route path="/user/accounts/login" element={<Login />} />
+            <Route path="/user/accounts/register" element={<Register />} />
+          </Routes>
+        </Suspense>
       </Container>
       <Footer />
     </ThemeProvider>
