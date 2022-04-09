@@ -7,7 +7,11 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Chip from '@mui/material/Chip';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../redux/reducers/authSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,6 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const { user, isAuthenticated } = useSelector(userSelector);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -68,28 +73,41 @@ export default function Header() {
           >
             InterCup
           </Typography>
-          <Search sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Button
-            variant="outlined"
-            color="inherit"
-            disableElevation
-            disableRipple
-            sx={{
-              borderRadius: '5px',
-            }}
-            component={Link}
-            to="/user/accounts/login"
-          >
-            Login
-          </Button>
+
+          {isAuthenticated ? (
+            <>
+              <Chip
+                avatar={<Avatar>{user.fullname.charAt(0)}</Avatar>}
+                label={user.fullname}
+                color="primary"
+              />
+            </>
+          ) : (
+            <>
+              <Search sx={{ display: { xs: 'none', sm: 'block' } }}>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+              <Button
+                variant="outlined"
+                color="inherit"
+                disableElevation
+                disableRipple
+                sx={{
+                  borderRadius: '5px',
+                }}
+                component={Link}
+                to="/user/accounts/login"
+              >
+                Login
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

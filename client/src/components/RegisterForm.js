@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
@@ -12,9 +12,15 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Icon } from '@iconify/react';
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+import { registerUser, userSelector } from '../redux/reducers/authSlice';
 
 export default function RegisterForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading, isError, isAuthenticated, error } =
+    useSelector(userSelector);
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
@@ -36,11 +42,22 @@ export default function RegisterForm() {
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      dispatch(registerUser(values));
     },
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const { errors, setErrors, touched, values, handleSubmit, getFieldProps } =
+    formik;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+    if (isError) {
+      setErrors(error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, error]);
 
   return (
     <FormikProvider value={formik}>
@@ -95,7 +112,7 @@ export default function RegisterForm() {
             size="large"
             type="submit"
             variant="contained"
-            loading={isSubmitting}
+            loading={isLoading}
             disableElevation
           >
             Register

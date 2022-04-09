@@ -50,7 +50,7 @@ router.post('/register', async (req, res) => {
 
     return res
       .status(201)
-      .json({ message: 'An Email sent to your account please verify' });
+      .json({ message: 'An Email has been sent, please verify' });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -90,9 +90,9 @@ router.post('/login', async (req, res) => {
 
           await sendEmail(user.email, 'Verify Email', url);
         } else {
-          return res
-            .status(400)
-            .json({ message: 'An Email sent to your account please verify' });
+          return res.status(400).json({
+            message: 'An Email has been sent, please verify',
+          });
         }
       } else {
         const accessToken = createToken(user);
