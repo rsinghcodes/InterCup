@@ -54,7 +54,6 @@ export default function LoginForm() {
     }
     if (isError) {
       setErrors(error);
-      console.log(error.message);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, error]);

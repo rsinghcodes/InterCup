@@ -1,20 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import {
-  Alert,
-  Box,
-  Card,
-  Container,
-  Link,
-  Snackbar,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Box, Card, Container, Link, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import LoginForm from '../components/LoginForm';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../redux/reducers/authSlice';
+
+import LoginForm from '../components/LoginForm';
+import Notification from '../components/Notification';
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
@@ -37,21 +30,28 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 const Login = () => {
   const { isError, error } = useSelector(userSelector);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: '',
+    type: 'success',
+  });
+
+  useEffect(() => {
+    if (isError) {
+      setNotify({
+        isOpen: true,
+        message: error.message,
+        type: 'error',
+      });
+    }
+  }, [isError, error]);
 
   return (
     <Box display="flex">
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }} elevation={0}>
         <img src="/assets/images/illustration_login.png" alt="login" />
       </SectionStyle>
-      <Snackbar
-        open={isError}
-        autoHideDuration={3000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert severity="error" sx={{ width: '100%' }}>
-          {error.message}
-        </Alert>
-      </Snackbar>
+      <Notification notify={notify} setNotify={setNotify} />
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>

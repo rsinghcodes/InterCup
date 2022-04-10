@@ -1,20 +1,14 @@
+import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import {
-  Box,
-  Card,
-  Link,
-  Container,
-  Typography,
-  Snackbar,
-  Alert,
-} from '@mui/material';
+import { Box, Card, Link, Container, Typography } from '@mui/material';
 // Redux
 import { useSelector } from 'react-redux';
 import { userSelector } from '../redux/reducers/authSlice';
 
 import RegisterForm from '../components/RegisterForm';
+import Notification from '../components/Notification';
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
@@ -39,21 +33,28 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Register() {
   const { message, isSuccess } = useSelector(userSelector);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: '',
+    type: '',
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setNotify({
+        isOpen: true,
+        message: message,
+        type: 'success',
+      });
+    }
+  }, [isSuccess, message]);
 
   return (
     <Box display="flex">
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }} elevation={0}>
         <img alt="register" src="/assets/images/illustration_login.png" />
       </SectionStyle>
-      <Snackbar
-        open={isSuccess}
-        autoHideDuration={3000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert severity="success" sx={{ width: '100%' }}>
-          {message}
-        </Alert>
-      </Snackbar>
+      <Notification notify={notify} setNotify={setNotify} />
       <Container>
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
