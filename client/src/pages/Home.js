@@ -3,8 +3,13 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Box, Button, Grid, Link, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HomeCard from '../components/HomeCard';
+// Redux
+import { useSelector } from 'react-redux';
+import { userSelector } from '../redux/reducers/authSlice';
 
 const Home = () => {
+  const { isAuthenticated } = useSelector(userSelector);
+
   return (
     <>
       <Grid container justifyContent="center" alignItems="center">
@@ -49,9 +54,9 @@ const Home = () => {
               boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
             }}
             component={RouterLink}
-            to="/user/accounts/login"
+            to={isAuthenticated ? '/dashboard' : '/user/accounts/login'}
           >
-            Get Started
+            {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
           </Button>
         </Grid>
       </Grid>
@@ -154,7 +159,7 @@ const Home = () => {
           <Link
             variant="h6"
             component={RouterLink}
-            to="/user/accounts/register"
+            to={isAuthenticated ? '/dashboard' : '/user/accounts/register'}
             underline="hover"
           >
             Start Now for Free!

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -6,12 +6,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { Button } from '@mui/material';
+import { Button, Menu, MenuItem, Tooltip } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { userSelector } from '../redux/reducers/authSlice';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { userSelector, logout } from '../redux/reducers/authSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,7 +57,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector(userSelector);
+
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -76,11 +89,61 @@ export default function Header() {
 
           {isAuthenticated ? (
             <>
-              <Chip
-                avatar={<Avatar>{user.fullname.charAt(0)}</Avatar>}
-                label={user.fullname}
-                color="primary"
-              />
+              <Tooltip title="Open Profile">
+                <Chip
+                  avatar={<Avatar>{user.fullname.charAt(0)}</Avatar>}
+                  label={user.fullname}
+                  color="primary"
+                  variant="outlined"
+                  onClick={handleOpenUserMenu}
+                />
+              </Tooltip>
+              <Menu
+                sx={{ mt: '2.5rem' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem
+                  onClick={handleCloseUserMenu}
+                  component={Link}
+                  to="/user/profile"
+                >
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleCloseUserMenu}
+                  component={Link}
+                  to="/user/account"
+                >
+                  <Typography textAlign="center">Account</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleCloseUserMenu}
+                  component={Link}
+                  to="/dashboard"
+                >
+                  <Typography textAlign="center">Dashboard</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    dispatch(logout());
+                    handleCloseUserMenu();
+                  }}
+                >
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
+              </Menu>
             </>
           ) : (
             <>

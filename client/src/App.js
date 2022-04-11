@@ -6,12 +6,14 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Spinner from './components/Spinner';
 import ScrollToTop from './components/ScrollToTop';
+import PrivateRoute from './utils/PrivateRoute';
 // pages
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Topics = lazy(() => import('./pages/Topics'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 
 function App() {
   const theme = createTheme({
@@ -32,6 +34,14 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
             <Route path="/topics/practice/" element={<Topics />} />
             <Route path="/user/accounts/login" element={<Login />} />
             <Route path="/user/accounts/register" element={<Register />} />
