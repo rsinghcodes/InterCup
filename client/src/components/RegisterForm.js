@@ -14,13 +14,13 @@ import { LoadingButton } from '@mui/lab';
 import { Icon } from '@iconify/react';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { registerUser, userSelector } from '../redux/reducers/authSlice';
+import { registerUser, authSelector } from '../redux/reducers/authSlice';
 
 export default function RegisterForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, isError, isAuthenticated, error } =
-    useSelector(userSelector);
+    useSelector(authSelector);
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({

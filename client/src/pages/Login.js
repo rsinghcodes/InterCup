@@ -4,7 +4,7 @@ import { Box, Card, Container, Link, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { useSelector } from 'react-redux';
-import { userSelector } from '../redux/reducers/authSlice';
+import { authSelector } from '../redux/reducers/authSlice';
 
 import LoginForm from '../components/LoginForm';
 import Notification from '../components/Notification';
@@ -29,7 +29,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 }));
 
 const Login = () => {
-  const { isError, error } = useSelector(userSelector);
+  const { isError, error } = useSelector(authSelector);
   const [notify, setNotify] = useState({
     isOpen: false,
     message: '',

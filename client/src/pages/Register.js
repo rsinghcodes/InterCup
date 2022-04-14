@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Card, Link, Container, Typography } from '@mui/material';
 // Redux
 import { useSelector } from 'react-redux';
-import { userSelector } from '../redux/reducers/authSlice';
+import { authSelector } from '../redux/reducers/authSlice';
 
 import RegisterForm from '../components/RegisterForm';
 import Notification from '../components/Notification';
@@ -32,11 +32,11 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Register() {
-  const { message, isSuccess } = useSelector(userSelector);
+  const { message, isSuccess } = useSelector(authSelector);
   const [notify, setNotify] = useState({
     isOpen: false,
     message: '',
-    type: '',
+    type: 'success',
   });
 
   useEffect(() => {

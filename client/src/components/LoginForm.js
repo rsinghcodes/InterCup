@@ -15,7 +15,7 @@ import { LoadingButton } from '@mui/lab';
 import { Icon } from '@iconify/react';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, userSelector } from '../redux/reducers/authSlice';
+import { loginUser, authSelector } from '../redux/reducers/authSlice';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, isError, isAuthenticated, error } =
-    useSelector(userSelector);
+    useSelector(authSelector);
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({

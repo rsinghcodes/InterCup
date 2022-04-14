@@ -5,10 +5,10 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HomeCard from '../components/HomeCard';
 // Redux
 import { useSelector } from 'react-redux';
-import { userSelector } from '../redux/reducers/authSlice';
+import { authSelector } from '../redux/reducers/authSlice';
 
 const Home = () => {
-  const { isAuthenticated } = useSelector(userSelector);
+  const { isAuthenticated } = useSelector(authSelector);
 
   return (
     <>

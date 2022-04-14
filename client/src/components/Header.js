@@ -12,7 +12,7 @@ import Chip from '@mui/material/Chip';
 import { Link } from 'react-router-dom';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { userSelector, logout } from '../redux/reducers/authSlice';
+import { authSelector, logout } from '../redux/reducers/authSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -58,7 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   const dispatch = useDispatch();
-  const { user, isAuthenticated } = useSelector(userSelector);
+  const { user, isAuthenticated } = useSelector(authSelector);
 
   const [anchorElUser, setAnchorElUser] = useState(null);
 

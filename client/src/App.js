@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Spinner from './components/Spinner';
 import ScrollToTop from './components/ScrollToTop';
-import PrivateRoute from './utils/PrivateRoute';
+import RequireAuth from './utils/RequireAuth';
 // pages
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
@@ -14,6 +14,7 @@ const Register = lazy(() => import('./pages/Register'));
 const Topics = lazy(() => import('./pages/Topics'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 function App() {
   const theme = createTheme({
@@ -34,14 +35,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
-            <Route
-              path="/dashboard"
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
+            <Route element={<RequireAuth />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route path="/user/profile" element={<Profile />} />
+            </Route>
             <Route path="/topics/practice/" element={<Topics />} />
             <Route path="/user/accounts/login" element={<Login />} />
             <Route path="/user/accounts/register" element={<Register />} />

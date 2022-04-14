@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Chip, Divider, Typography } from '@mui/material';
 // Redux
-import { useSelector } from 'react-redux';
-import { userSelector } from '../redux/reducers/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile, userSelector } from '../redux/reducers/userSlice';
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector(userSelector);
+
+  useEffect(() => {
+    dispatch(getProfile());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -21,7 +27,7 @@ const Dashboard = () => {
         </Typography>
         <Box textAlign="center">
           <Chip
-            label="Global Rank: 2545"
+            label={`Global Rank: ${user.global_rank}`}
             color="primary"
             sx={{ my: '1rem', mr: '0.5rem' }}
           />
