@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import setAuthToken from '../../utils/setAuthToken';
+import { deleteProfile } from './userSlice';
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',
@@ -21,6 +23,7 @@ export const loginUser = createAsyncThunk(
       const response = await axios.post('/api/user/login', userData);
       const { accessToken } = response.data;
 
+      setAuthToken(accessToken);
       localStorage.setItem('token', accessToken);
       // Decode token to get user data
       const decoded = jwt_decode(accessToken);
@@ -48,6 +51,10 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       localStorage.removeItem('token');
+    },
+    setCurrentUser: (state, action) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
     },
   },
   extraReducers: {
@@ -78,10 +85,25 @@ const authSlice = createSlice({
       state.isError = true;
       state.error = payload;
     },
+    [deleteProfile.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.isAuthenticated = false;
+      state.user = null;
+      localStorage.removeItem('token');
+    },
+    [deleteProfile.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteProfile.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = payload;
+    },
   },
 });
 
-export const { logout, setUser } = authSlice.actions;
+export const { logout, setCurrentUser } = authSlice.actions;
 export const authSelector = (state) => state.auth;
 
 export default authSlice.reducer;

@@ -130,4 +130,50 @@ router.get('/profile', authenticatedMiddleware, async (req, res) => {
   }
 });
 
+router.delete('/:id', authenticatedMiddleware, async (req, res) => {
+  try {
+    let user = await User.findById(req.params.id);
+
+    if (user && user._id == req.user.id) {
+      user = await user.remove();
+
+      return res.status(200).json({
+        user,
+      });
+    } else {
+      return res.status(403).json({
+        error: 'Action not allowed',
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Server Error',
+    });
+  }
+});
+
+router.put('/:id', authenticatedMiddleware, async (req, res) => {
+  try {
+    let user = await User.findById(req.params.id);
+
+    if (user && user._id == req.user.id) {
+      user = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
+
+      return res.status(200).json({
+        message: 'Password updated successfully',
+      });
+    } else {
+      return res.status(403).json({
+        error: 'Action not allowed',
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Server Error',
+    });
+  }
+});
+
 module.exports = router;

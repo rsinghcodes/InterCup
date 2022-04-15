@@ -119,14 +119,14 @@ export default function Header() {
                   component={Link}
                   to="/user/profile"
                 >
-                  <Typography textAlign="center">Profile</Typography>
+                  <Typography textAlign="center">Manage Account</Typography>
                 </MenuItem>
                 <MenuItem
                   onClick={handleCloseUserMenu}
                   component={Link}
-                  to="/user/account"
+                  to="/user/update-password"
                 >
-                  <Typography textAlign="center">Account</Typography>
+                  <Typography textAlign="center">Update Password</Typography>
                 </MenuItem>
                 <MenuItem
                   onClick={handleCloseUserMenu}

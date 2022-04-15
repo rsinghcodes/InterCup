@@ -17,6 +17,22 @@ export const getProfile = createAsyncThunk(
   }
 );
 
+export const deleteProfile = createAsyncThunk(
+  'user/deleteProfile',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete(`/api/user/${id}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -37,6 +53,19 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [getProfile.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = payload;
+    },
+    [deleteProfile.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.user = null;
+    },
+    [deleteProfile.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteProfile.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.isError = true;
       state.error = payload;

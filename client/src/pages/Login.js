@@ -37,7 +37,7 @@ const Login = () => {
   });
 
   useEffect(() => {
-    if (isError) {
+    if (isError && error.message) {
       setNotify({
         isOpen: true,
         message: error.message,
