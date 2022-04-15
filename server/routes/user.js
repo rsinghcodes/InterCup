@@ -46,7 +46,7 @@ router.post('/register', async (req, res) => {
 
     const url = `${BASE_URL}/auth/user/${user.id}/verify/${token.token}`;
 
-    await sendEmail(user.email, 'Verify Email', url);
+    await sendEmail(user.fullname, user.email, 'Account Activation Link', url);
 
     return res
       .status(201)
@@ -86,9 +86,18 @@ router.post('/login', async (req, res) => {
             token: crypto.randomBytes(32).toString('hex'),
           }).save();
 
-          const url = `${BASE_URL}users/${user.id}/verify/${token.token}`;
+          const url = `${BASE_URL}/auth/user/${user.id}/verify/${token.token}`;
 
-          await sendEmail(user.email, 'Verify Email', url);
+          await sendEmail(
+            user.fullname,
+            user.email,
+            'Account Activation Link',
+            url
+          );
+
+          return res
+            .status(201)
+            .json({ message: 'An Email has been sent, please verify' });
         } else {
           return res.status(400).json({
             message: 'An Email has been sent, please verify',

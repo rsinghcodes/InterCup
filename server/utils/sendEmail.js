@@ -1,7 +1,12 @@
 const nodemailer = require('nodemailer');
+const path = require('path');
+const fs = require('fs');
+const ejs = require('ejs');
+const { htmlToText } = require('html-to-text');
+const juice = require('juice');
 require('dotenv').config();
 
-module.exports = async (email, subject, text) => {
+module.exports = async (name, email, subject, verificationLink) => {
   try {
     const transporter = nodemailer.createTransport({
       host: process.env.HOST,
@@ -14,10 +19,18 @@ module.exports = async (email, subject, text) => {
       },
     });
 
+    const templatePath = path.join(__dirname, '../templates/index.ejs');
+    console.log(templatePath);
+    const template = fs.readFileSync(templatePath, 'utf-8');
+    const html = ejs.render(template, { name, verificationLink });
+    const text = htmlToText(html);
+    const htmlWithStylesInlined = juice(html);
+
     await transporter.sendMail({
       from: process.env.USER,
       to: email,
       subject: subject,
+      html: htmlWithStylesInlined,
       text: text,
     });
     console.log('Email sent successfully');
