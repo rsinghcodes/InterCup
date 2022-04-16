@@ -37,7 +37,7 @@ router.post('/new', authenticatedMiddleware, async (req, res) => {
       // Save new question
       question = await Question.create(req.body);
 
-      return res.status(201).json({ question });
+      return res.status(201).json(question);
     } else {
       return res.status(403).json({
         error: 'Action not allowed',
@@ -64,9 +64,7 @@ router.delete('/:id', authenticatedMiddleware, async (req, res) => {
 
       question = await question.remove();
 
-      return res.status(200).json({
-        question,
-      });
+      return res.status(200).json(question);
     } else {
       return res.status(403).json({
         error: 'Action not allowed',
@@ -103,9 +101,7 @@ router.put('/:id', authenticatedMiddleware, async (req, res) => {
         new: true,
       });
 
-      return res.status(201).json({
-        question,
-      });
+      return res.status(201).json(question);
     } else {
       return res.status(403).json({
         error: 'Action not allowed',

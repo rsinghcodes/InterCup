@@ -98,52 +98,101 @@ export default function Header() {
                   onClick={handleOpenUserMenu}
                 />
               </Tooltip>
-              <Menu
-                sx={{ mt: '2.5rem' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem
-                  onClick={handleCloseUserMenu}
-                  component={Link}
-                  to="/user/profile"
-                >
-                  <Typography textAlign="center">Manage Account</Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={handleCloseUserMenu}
-                  component={Link}
-                  to="/user/update-password"
-                >
-                  <Typography textAlign="center">Update Password</Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={handleCloseUserMenu}
-                  component={Link}
-                  to="/dashboard"
-                >
-                  <Typography textAlign="center">Dashboard</Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    dispatch(logout());
-                    handleCloseUserMenu();
+              {user.role === 'admin' ? (
+                <Menu
+                  sx={{ mt: '2.5rem' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
                   }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
                 >
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
-              </Menu>
+                  <MenuItem
+                    onClick={handleCloseUserMenu}
+                    component={Link}
+                    to="/admin/manage-users"
+                  >
+                    <Typography textAlign="center">Manage Users</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleCloseUserMenu}
+                    component={Link}
+                    to="/admin/manage-questions"
+                  >
+                    <Typography textAlign="center">Manage Questions</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleCloseUserMenu}
+                    component={Link}
+                    to="/"
+                  >
+                    <Typography textAlign="center">Dashboard</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      dispatch(logout());
+                      handleCloseUserMenu();
+                    }}
+                  >
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </Menu>
+              ) : (
+                <Menu
+                  sx={{ mt: '2.5rem' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem
+                    onClick={handleCloseUserMenu}
+                    component={Link}
+                    to="/user/profile"
+                  >
+                    <Typography textAlign="center">Manage Account</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleCloseUserMenu}
+                    component={Link}
+                    to="/user/edit-profile"
+                  >
+                    <Typography textAlign="center">Update Profile</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleCloseUserMenu}
+                    component={Link}
+                    to="/dashboard"
+                  >
+                    <Typography textAlign="center">Dashboard</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      dispatch(logout());
+                      handleCloseUserMenu();
+                    }}
+                  >
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </Menu>
+              )}
             </>
           ) : (
             <>

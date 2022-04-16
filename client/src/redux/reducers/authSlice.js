@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
-import { deleteProfile } from './userSlice';
+import { deleteProfile, updateProfile } from './userSlice';
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',
@@ -21,6 +21,25 @@ export const loginUser = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post('/api/user/login', userData);
+      const { accessToken } = response.data;
+
+      setAuthToken(accessToken);
+      localStorage.setItem('token', accessToken);
+      // Decode token to get user data
+      const decoded = jwt_decode(accessToken);
+      // Return decoded user
+      return decoded;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const loginAdmin = createAsyncThunk(
+  'admin/loginAdmin',
+  async (userData, thunkAPI) => {
+    try {
+      const response = await axios.post('/api/admin/login', userData);
       const { accessToken } = response.data;
 
       setAuthToken(accessToken);
@@ -72,6 +91,20 @@ const authSlice = createSlice({
       state.isError = true;
       state.error = payload;
     },
+    [loginAdmin.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isAuthenticated = true;
+      state.isSuccess = true;
+      state.user = payload;
+    },
+    [loginAdmin.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [loginAdmin.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = payload;
+    },
     [registerUser.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.isSuccess = true;
@@ -99,6 +132,25 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.error = payload;
+    },
+    [updateProfile.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isAuthenticated = true;
+      state.isSuccess = true;
+
+      setAuthToken(payload.accessToken);
+      localStorage.setItem('token', payload.accessToken);
+
+      state.user = jwt_decode(payload.accessToken);
+    },
+    [updateProfile.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateProfile.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = payload;
+      state.isAuthenticated = false;
     },
   },
 });

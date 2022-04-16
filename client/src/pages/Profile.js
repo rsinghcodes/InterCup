@@ -9,6 +9,8 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -54,7 +56,7 @@ const Profile = () => {
         <Box display="flex" justifyContent="center" alignItems="center" my={2}>
           <Card variant="outlined">
             <CardContent>
-              <Grid container spacing={2}>
+              <Grid container spacing={1}>
                 <Grid item xs={6}>
                   <Typography variant="subtitle1" component="p">
                     Full Name
@@ -95,6 +97,34 @@ const Profile = () => {
                     {user.global_rank}
                   </Typography>
                 </Grid>
+                {user.profession && (
+                  <>
+                    <Grid item xs={6}>
+                      <Typography variant="subtitle1" component="p">
+                        Profession
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="subtitle1" component="p">
+                        {user.profession}
+                      </Typography>
+                    </Grid>
+                  </>
+                )}
+                {user.college && (
+                  <>
+                    <Grid item xs={6}>
+                      <Typography variant="subtitle1" component="p">
+                        College
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="subtitle1" component="p">
+                        {user.college}
+                      </Typography>
+                    </Grid>
+                  </>
+                )}
               </Grid>
             </CardContent>
           </Card>
@@ -104,26 +134,10 @@ const Profile = () => {
       <Box display="flex" justifyContent="space-between" my={2}>
         <Button
           variant="contained"
-          color="primary"
-          disableElevation
-          disableRipple
-          sx={{
-            px: { xs: 3, lg: 6 },
-            py: { xs: 1, lg: 1 },
-            fontSize: { xs: '0.8rem', lg: '1rem' },
-            textTransform: 'none',
-            borderRadius: '5px',
-          }}
-          component={Link}
-          to={`/user/update-password`}
-        >
-          Update Password
-        </Button>
-        <Button
-          variant="contained"
           color="secondary"
           disableElevation
           disableRipple
+          startIcon={<DeleteIcon />}
           sx={{
             px: { xs: 3, lg: 6 },
             py: { xs: 1, lg: 1 },
@@ -153,6 +167,24 @@ const Profile = () => {
           }}
         >
           Delete Account
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          disableRipple
+          startIcon={<EditIcon />}
+          sx={{
+            px: { xs: 3, lg: 6 },
+            py: { xs: 1, lg: 1 },
+            fontSize: { xs: '0.8rem', lg: '1rem' },
+            textTransform: 'none',
+            borderRadius: '5px',
+          }}
+          component={Link}
+          to="/user/edit-profile"
+        >
+          Edit Profile
         </Button>
       </Box>
       <ConfirmDialog

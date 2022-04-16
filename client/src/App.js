@@ -13,6 +13,7 @@ import setAuthToken from './utils/setAuthToken';
 // Redux
 import { store } from './redux/store';
 import { logout, setCurrentUser } from './redux/reducers/authSlice';
+import { getProfile } from './redux/reducers/userSlice';
 // pages
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
@@ -21,7 +22,12 @@ const Topics = lazy(() => import('./pages/Topics'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Profile = lazy(() => import('./pages/Profile'));
-const UpdatePassword = lazy(() => import('./pages/UpdatePassword'));
+const EditProfile = lazy(() => import('./pages/EditProfile'));
+// Admin
+const AdminLogin = lazy(() => import('./pages/Admin/AdminLogin'));
+const ManageUser = lazy(() => import('./pages/Admin/ManageUser'));
+const CreateQuestions = lazy(() => import('./pages/Admin/CreateQuestions'));
+const ManageQuestion = lazy(() => import('./pages/Admin/ManageQuestion'));
 
 if (localStorage.token) {
   const token = localStorage.token;
@@ -30,6 +36,7 @@ if (localStorage.token) {
   const decoded = jwt_decode(token);
 
   store.dispatch(setCurrentUser(decoded));
+  store.dispatch(getProfile());
 
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
@@ -65,14 +72,22 @@ function App() {
               <Route path="/user/profile" element={<Profile />} />
             </Route>
             <Route element={<RequireAuth />}>
-              <Route
-                path="/user/update-password"
-                element={<UpdatePassword />}
-              />
+              <Route path="/user/edit-profile" element={<EditProfile />} />
             </Route>
             <Route path="/topics/practice/" element={<Topics />} />
             <Route path="/user/accounts/login" element={<Login />} />
             <Route path="/user/accounts/register" element={<Register />} />
+
+            <Route path="/admin/account/login" element={<AdminLogin />} />
+            <Route path="/admin/manage-users" element={<ManageUser />} />
+            <Route
+              path="/admin/manage-questions/new"
+              element={<CreateQuestions />}
+            />
+            <Route
+              path="/admin/manage-questions"
+              element={<ManageQuestion />}
+            />
           </Routes>
         </Suspense>
       </Container>

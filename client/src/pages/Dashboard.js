@@ -4,6 +4,8 @@ import { Box, Chip, Divider, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile, userSelector } from '../redux/reducers/userSlice';
 
+import Topics from './Topics';
+
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(userSelector);
@@ -35,13 +37,7 @@ const Dashboard = () => {
         </Box>
       </Box>
       <Divider />
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        py="1.5rem"
-        flexDirection="column"
-      ></Box>
+      <Topics />
     </>
   );
 };

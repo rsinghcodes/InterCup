@@ -96,10 +96,10 @@ router.post('/login', async (req, res) => {
           );
 
           return res
-            .status(201)
+            .status(403)
             .json({ message: 'An Email has been sent, please verify' });
         } else {
-          return res.status(400).json({
+          return res.status(403).json({
             message: 'An Email has been sent, please verify',
           });
         }
@@ -161,9 +161,9 @@ router.put('/:id', authenticatedMiddleware, async (req, res) => {
         new: true,
       });
 
-      return res.status(200).json({
-        message: 'Password updated successfully',
-      });
+      const accessToken = createToken(user);
+
+      return res.status(200).json({ user, accessToken });
     } else {
       return res.status(403).json({
         error: 'Action not allowed',

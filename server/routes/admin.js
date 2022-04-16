@@ -4,6 +4,7 @@ const Admin = require('../models/Admin');
 const { ValidateLogin, validateSignUp } = require('../validation/validation');
 const { createToken } = require('../middleware/token');
 const authenticatedMiddleware = require('../middleware/authenticated');
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -79,6 +80,24 @@ router.get('/profile', authenticatedMiddleware, async (req, res) => {
       .exec();
 
     return res.status(200).json(profile);
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Server Error',
+    });
+  }
+});
+
+router.get('/get-users', authenticatedMiddleware, async (req, res) => {
+  try {
+    if (req.user.role === 'admin') {
+      const users = await User.find();
+
+      return res.status(200).json(users);
+    } else {
+      return res.status(403).json({
+        error: 'Action not allowed',
+      });
+    }
   } catch (error) {
     return res.status(500).json({
       error: 'Server Error',
