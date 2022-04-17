@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Menu,
@@ -9,11 +8,16 @@ import {
   ListItemText,
 } from '@mui/material';
 // component
-import Iconify from '../../../components/Iconify';
+import Iconify from '../Iconify';
 
 // ----------------------------------------------------------------------
 
-export default function UserMoreMenu() {
+export default function TableMoreMenu({
+  openInPopup,
+  row,
+  setConfirmDialog,
+  onDelete,
+}) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,7 +37,20 @@ export default function UserMoreMenu() {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem sx={{ color: 'text.secondary' }}>
+        <MenuItem
+          sx={{ color: 'text.secondary' }}
+          onClick={() => {
+            setConfirmDialog({
+              isOpen: true,
+              title: 'Are you sure want to delete this record?',
+              subTitle: "You can't undo this action",
+              onConfirm: () => {
+                onDelete(row._id);
+              },
+            });
+            setIsOpen(false);
+          }}
+        >
           <ListItemIcon>
             <Iconify icon="eva:trash-2-outline" width={24} height={24} />
           </ListItemIcon>
@@ -44,8 +61,10 @@ export default function UserMoreMenu() {
         </MenuItem>
 
         <MenuItem
-          component={RouterLink}
-          to="#"
+          onClick={() => {
+            openInPopup(row);
+            setIsOpen(false);
+          }}
           sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>

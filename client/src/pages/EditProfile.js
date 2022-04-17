@@ -8,12 +8,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
 import * as Yup from 'yup';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProfile, userSelector } from '../redux/reducers/userSlice';
+import { updateUserProfile, userSelector } from '../redux/reducers/userSlice';
 import { useFormik, Form, FormikProvider } from 'formik';
+import Iconify from '../components/Iconify';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const EditProfile = () => {
     },
     validationSchema: EditProfileSchema,
     onSubmit: () => {
-      dispatch(updateProfile(values));
+      dispatch(updateUserProfile(values));
     },
   });
 
@@ -46,8 +46,8 @@ const EditProfile = () => {
     formik;
 
   useEffect(() => {
-    if (user) {
-      setValues(user);
+    if (user != null) {
+      setValues({ ...user });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
@@ -138,7 +138,9 @@ const EditProfile = () => {
                 color="primary"
                 disableElevation
                 disableRipple
-                startIcon={<SaveIcon />}
+                startIcon={
+                  <Iconify icon="eva:save-fill" width={24} height={24} />
+                }
                 type="submit"
                 sx={{
                   px: { xs: 3, lg: 6 },

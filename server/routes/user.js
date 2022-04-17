@@ -52,7 +52,6 @@ router.post('/register', async (req, res) => {
       .status(201)
       .json({ message: 'An Email has been sent, please verify' });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       error: 'Server Error',
     });
@@ -134,7 +133,7 @@ router.delete('/:id', authenticatedMiddleware, async (req, res) => {
   try {
     let user = await User.findById(req.params.id);
 
-    if (user && user._id == req.user.id) {
+    if ((user && user._id == req.user.id) || req.user.role == 'admin') {
       user = await user.remove();
 
       return res.status(200).json({
@@ -156,7 +155,7 @@ router.put('/:id', authenticatedMiddleware, async (req, res) => {
   try {
     let user = await User.findById(req.params.id);
 
-    if (user && user._id == req.user.id) {
+    if ((user && user._id == req.user.id) || req.user.role == 'admin') {
       user = await User.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
       });

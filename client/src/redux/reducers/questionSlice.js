@@ -14,7 +14,7 @@ export const fetchQuestions = createAsyncThunk(
 );
 
 export const createQuestion = createAsyncThunk(
-  'question/createQuestion',
+  'question/new',
   async (questionData, thunkAPI) => {
     try {
       const response = await axios.post('/api/questions/new', questionData, {
@@ -22,6 +22,43 @@ export const createQuestion = createAsyncThunk(
           authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteQuestion = createAsyncThunk(
+  'question/delete',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete(`/api/questions/${id}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// update Question
+export const updateQuestion = createAsyncThunk(
+  'question/update',
+  async (userData, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `/api/questions/${userData._id}`,
+        userData,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -60,6 +97,24 @@ const questionSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.error = payload;
+    },
+    [updateQuestion.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.questions = state.questions.map((x) =>
+        x._id === payload._id ? payload : x
+      );
+    },
+    [updateQuestion.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteQuestion.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.questions = state.questions.filter((x) => x._id !== payload._id);
+    },
+    [deleteQuestion.pending]: (state) => {
+      state.isLoading = true;
     },
   },
 });

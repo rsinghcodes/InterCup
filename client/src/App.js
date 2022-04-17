@@ -26,7 +26,6 @@ const EditProfile = lazy(() => import('./pages/EditProfile'));
 // Admin
 const AdminLogin = lazy(() => import('./pages/Admin/AdminLogin'));
 const ManageUser = lazy(() => import('./pages/Admin/ManageUser'));
-const CreateQuestions = lazy(() => import('./pages/Admin/CreateQuestions'));
 const ManageQuestion = lazy(() => import('./pages/Admin/ManageQuestion'));
 
 if (localStorage.token) {
@@ -79,15 +78,15 @@ function App() {
             <Route path="/user/accounts/register" element={<Register />} />
 
             <Route path="/admin/account/login" element={<AdminLogin />} />
-            <Route path="/admin/manage-users" element={<ManageUser />} />
-            <Route
-              path="/admin/manage-questions/new"
-              element={<CreateQuestions />}
-            />
-            <Route
-              path="/admin/manage-questions"
-              element={<ManageQuestion />}
-            />
+            <Route element={<RequireAuth />}>
+              <Route path="/admin/manage-users" element={<ManageUser />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route
+                path="/admin/manage-questions"
+                element={<ManageQuestion />}
+              />
+            </Route>
           </Routes>
         </Suspense>
       </Container>

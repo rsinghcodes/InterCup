@@ -17,7 +17,7 @@ export const getProfile = createAsyncThunk(
   }
 );
 
-export const deleteProfile = createAsyncThunk(
+export const deleteUserProfile = createAsyncThunk(
   'user/deleteProfile',
   async (id, thunkAPI) => {
     try {
@@ -33,7 +33,7 @@ export const deleteProfile = createAsyncThunk(
   }
 );
 
-export const updateProfile = createAsyncThunk(
+export const updateUserProfile = createAsyncThunk(
   'user/updateProfile',
   async (userData, thunkAPI) => {
     try {
@@ -74,28 +74,28 @@ const userSlice = createSlice({
       state.isError = true;
       state.error = payload;
     },
-    [deleteProfile.fulfilled]: (state, { payload }) => {
+    [deleteUserProfile.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.isSuccess = true;
       state.user = null;
     },
-    [deleteProfile.pending]: (state) => {
+    [deleteUserProfile.pending]: (state) => {
       state.isLoading = true;
     },
-    [deleteProfile.rejected]: (state, { payload }) => {
+    [deleteUserProfile.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.isError = true;
       state.error = payload;
     },
-    [updateProfile.fulfilled]: (state, { payload }) => {
+    [updateUserProfile.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.isSuccess = true;
       state.user = payload.user;
     },
-    [updateProfile.pending]: (state) => {
+    [updateUserProfile.pending]: (state) => {
       state.isLoading = true;
     },
-    [updateProfile.rejected]: (state, { payload }) => {
+    [updateUserProfile.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.isError = true;
       state.error = payload;

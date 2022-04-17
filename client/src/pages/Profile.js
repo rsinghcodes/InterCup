@@ -9,16 +9,15 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getProfile,
-  deleteProfile,
+  deleteUserProfile,
   userSelector,
 } from '../redux/reducers/userSlice';
 // components
+import Iconify from '../components/Iconify';
 import ConfirmDialog from '../components/ConfirmDialog';
 import Notification from '../components/Notification';
 
@@ -137,7 +136,9 @@ const Profile = () => {
           color="secondary"
           disableElevation
           disableRipple
-          startIcon={<DeleteIcon />}
+          startIcon={
+            <Iconify icon="eva:trash-2-outline" width={24} height={24} />
+          }
           sx={{
             px: { xs: 3, lg: 6 },
             py: { xs: 1, lg: 1 },
@@ -152,7 +153,7 @@ const Profile = () => {
               subTitle:
                 'When you delete your account, your profile, global rank, score will be permanently removed and you wont be able to login again. You can also choose to take a break for sometime.',
               onConfirm: () => {
-                dispatch(deleteProfile(user._id));
+                dispatch(deleteUserProfile(user._id));
                 setConfirmDialog({
                   ...confirmDialog,
                   isOpen: false,
@@ -173,7 +174,7 @@ const Profile = () => {
           color="primary"
           disableElevation
           disableRipple
-          startIcon={<EditIcon />}
+          startIcon={<Iconify icon="eva:edit-fill" width={24} height={24} />}
           sx={{
             px: { xs: 3, lg: 6 },
             py: { xs: 1, lg: 1 },

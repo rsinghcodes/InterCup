@@ -1,13 +1,11 @@
 import { filter } from 'lodash';
 import { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Card,
   Table,
   Stack,
   Button,
-  Checkbox,
   TableRow,
   TableBody,
   TableCell,
@@ -17,21 +15,27 @@ import {
   TablePagination,
   Box,
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 // components
-import Scrollbar from '../../components/Scrollbar';
 import {
-  UserListHead,
-  UserListToolbar,
-  UserMoreMenu,
-} from '../../components/@adminDashboard/user';
+  ListHead,
+  ListToolbar,
+  TableMoreMenu,
+} from '../../components/@adminDashboard';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  createQuestion,
+  deleteQuestion,
   fetchQuestions,
   questionSelector,
+  updateQuestion,
 } from '../../redux/reducers/questionSlice';
+import Popup from '../../components/Popup';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import Notification from '../../components/Notification';
+import Iconify from '../../components/Iconify';
+import QuestionForm from '../../components/@adminDashboard/QuestionForm';
 
 // ----------------------------------------------------------------------
 
@@ -87,50 +91,34 @@ export default function ManageQuestion() {
 
   const [order, setOrder] = useState('asc');
 
-  const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('name');
 
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const [recordForEdit, setRecordForEdit] = useState(null);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: '',
+    type: 'success',
+  });
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: '',
+    subTitle: '',
+  });
+
   useEffect(() => {
     dispatch(fetchQuestions());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questions]);
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = questions.map((n) => n.topic);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -155,70 +143,94 @@ export default function ManageQuestion() {
     filterName
   );
 
+  const addOrEditQuestion = (question, resetForm) => {
+    if (question._id == null) {
+      dispatch(createQuestion(question));
+      setNotify({
+        isOpen: true,
+        message: 'Question Added Successfully',
+        type: 'success',
+      });
+    } else {
+      dispatch(updateQuestion(question));
+      setNotify({
+        isOpen: true,
+        message: 'Question Updated Successfully',
+        type: 'success',
+      });
+    }
+    resetForm();
+    setRecordForEdit(null);
+    setOpenPopup(false);
+  };
+
+  const openInPopup = (item) => {
+    setRecordForEdit(item);
+    setOpenPopup(true);
+  };
+
+  const onDelete = (id) => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false,
+    });
+    dispatch(deleteQuestion(id));
+    setNotify({
+      isOpen: true,
+      message: 'Deleted Successfully',
+      type: 'error',
+    });
+  };
+
   return (
-    <Box my={2}>
-      <Container>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Typography variant="h5" fontWeight="600" component="h5" my={2}>
-            Questions
-          </Typography>
-          <Button
-            variant="contained"
-            disableElevation
-            component={RouterLink}
-            to="/admin/manage-questions/new"
-            startIcon={<AddIcon />}
+    <>
+      <Box my={2}>
+        <Container>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
           >
-            New Question
-          </Button>
-        </Stack>
+            <Typography variant="h5" fontWeight="600" component="h5" my={2}>
+              Questions
+            </Typography>
+            <Button
+              variant="contained"
+              disableElevation
+              startIcon={<Iconify icon="eva:plus-fill" />}
+              onClick={() => {
+                setOpenPopup(true);
+                setRecordForEdit(null);
+              }}
+            >
+              New Question
+            </Button>
+          </Stack>
 
-        <Card>
-          <UserListToolbar
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
+          <Card>
+            <ListToolbar
+              filterName={filterName}
+              onFilterName={handleFilterByName}
+              placeholder="Search by Topic..."
+            />
 
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
+            <TableContainer>
               <Table>
-                <UserListHead
+                <ListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={questions.length}
-                  numSelected={selected.length}
                   onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                       const { _id, topic, question, answer, marks } = row;
-                      const isItemSelected = selected.indexOf(topic) !== -1;
 
                       return (
-                        <TableRow
-                          hover
-                          key={_id}
-                          tabIndex={-1}
-                          role="checkbox"
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                        >
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isItemSelected}
-                              onChange={(event) => handleClick(event, topic)}
-                            />
-                          </TableCell>
-                          <TableCell component="th" scope="row" padding="none">
+                        <TableRow hover key={_id} tabIndex={-1}>
+                          <TableCell component="th" scope="row">
                             <Typography variant="subtitle2" noWrap>
                               {topic}
                             </Typography>
@@ -228,7 +240,12 @@ export default function ManageQuestion() {
                           <TableCell align="left">{marks}</TableCell>
 
                           <TableCell align="right">
-                            <UserMoreMenu />
+                            <TableMoreMenu
+                              openInPopup={openInPopup}
+                              row={row}
+                              onDelete={onDelete}
+                              setConfirmDialog={setConfirmDialog}
+                            />
                           </TableCell>
                         </TableRow>
                       );
@@ -241,19 +258,34 @@ export default function ManageQuestion() {
                 </TableBody>
               </Table>
             </TableContainer>
-          </Scrollbar>
 
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={questions.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
-      </Container>
-    </Box>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={questions.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Card>
+        </Container>
+      </Box>
+      <Popup
+        title="Add New User"
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+      >
+        <QuestionForm
+          recordForEdit={recordForEdit}
+          addOrEditQuestion={addOrEditQuestion}
+        />
+      </Popup>
+      <Notification notify={notify} setNotify={setNotify} />
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      />
+    </>
   );
 }

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
-import { deleteProfile, updateProfile } from './userSlice';
+import { deleteUserProfile, updateUserProfile } from './userSlice';
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',
@@ -118,35 +118,39 @@ const authSlice = createSlice({
       state.isError = true;
       state.error = payload;
     },
-    [deleteProfile.fulfilled]: (state, { payload }) => {
+    [deleteUserProfile.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.isAuthenticated = false;
-      state.user = null;
-      localStorage.removeItem('token');
+
+      if (state.user.role === 'user') {
+        state.isAuthenticated = false;
+        state.user = null;
+        localStorage.removeItem('token');
+      }
     },
-    [deleteProfile.pending]: (state) => {
+    [deleteUserProfile.pending]: (state) => {
       state.isLoading = true;
     },
-    [deleteProfile.rejected]: (state, { payload }) => {
+    [deleteUserProfile.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.isError = true;
       state.error = payload;
     },
-    [updateProfile.fulfilled]: (state, { payload }) => {
+    [updateUserProfile.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.isAuthenticated = true;
       state.isSuccess = true;
 
-      setAuthToken(payload.accessToken);
-      localStorage.setItem('token', payload.accessToken);
-
-      state.user = jwt_decode(payload.accessToken);
+      if (state.user.role === 'user') {
+        setAuthToken(payload.accessToken);
+        localStorage.setItem('token', payload.accessToken);
+        state.user = jwt_decode(payload.accessToken);
+      }
     },
-    [updateProfile.pending]: (state) => {
+    [updateUserProfile.pending]: (state) => {
       state.isLoading = true;
     },
-    [updateProfile.rejected]: (state, { payload }) => {
+    [updateUserProfile.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.isError = true;
       state.error = payload;
