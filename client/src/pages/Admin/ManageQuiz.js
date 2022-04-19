@@ -25,12 +25,12 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  createQuestion,
-  deleteQuestion,
-  fetchQuestions,
-  questionSelector,
-  updateQuestion,
-} from '../../redux/reducers/questionSlice';
+  createQuiz,
+  deleteQuiz,
+  fetchQuizzes,
+  quizSelector,
+  updateQuiz,
+} from '../../redux/reducers/quizSlice';
 import Popup from '../../components/Popup';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import Notification from '../../components/Notification';
@@ -82,10 +82,10 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function ManageQuestion() {
+export default function ManageQuiz() {
   const dispatch = useDispatch();
 
-  const { questions } = useSelector(questionSelector);
+  const { quizzes } = useSelector(quizSelector);
 
   const [page, setPage] = useState(0);
 
@@ -111,7 +111,7 @@ export default function ManageQuestion() {
   });
 
   useEffect(() => {
-    dispatch(fetchQuestions());
+    dispatch(fetchQuizzes());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -135,24 +135,24 @@ export default function ManageQuestion() {
   };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - questions.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - quizzes.length) : 0;
 
   const filteredUsers = applySortFilter(
-    questions,
+    quizzes,
     getComparator(order, orderBy),
     filterName
   );
 
-  const addOrEditQuestion = (question, resetForm) => {
-    if (question._id == null) {
-      dispatch(createQuestion(question));
+  const addOrEditQuestion = (quiz, resetForm) => {
+    if (quiz._id == null) {
+      dispatch(createQuiz(quiz));
       setNotify({
         isOpen: true,
         message: 'Question Added Successfully',
         type: 'success',
       });
     } else {
-      dispatch(updateQuestion(question));
+      dispatch(updateQuiz(quiz));
       setNotify({
         isOpen: true,
         message: 'Question Updated Successfully',
@@ -174,7 +174,7 @@ export default function ManageQuestion() {
       ...confirmDialog,
       isOpen: false,
     });
-    dispatch(deleteQuestion(id));
+    dispatch(deleteQuiz(id));
     setNotify({
       isOpen: true,
       message: 'Deleted Successfully',
@@ -192,7 +192,7 @@ export default function ManageQuestion() {
             justifyContent="space-between"
           >
             <Typography variant="h5" fontWeight="600" component="h5" my={2}>
-              Questions
+              Quizzes
             </Typography>
             <Button
               variant="contained"
@@ -211,7 +211,7 @@ export default function ManageQuestion() {
                 boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
               }}
             >
-              New Question
+              New Quiz
             </Button>
           </Stack>
 
@@ -270,7 +270,7 @@ export default function ManageQuestion() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={questions.length}
+              count={quizzes.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -280,7 +280,7 @@ export default function ManageQuestion() {
         </Container>
       </Box>
       <Popup
-        title="Add New Question"
+        title="Add New Quiz"
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

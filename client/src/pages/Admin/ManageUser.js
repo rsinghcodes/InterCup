@@ -204,6 +204,14 @@ export default function ManageUser() {
                 setOpenPopup(true);
                 setRecordForEdit(null);
               }}
+              sx={{
+                px: 3,
+                py: 1,
+                fontSize: { xs: '0.8rem', lg: '1rem' },
+                textTransform: 'none',
+                borderRadius: '8px',
+                boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
+              }}
             >
               New User
             </Button>

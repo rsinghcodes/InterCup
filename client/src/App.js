@@ -14,6 +14,7 @@ import setAuthToken from './utils/setAuthToken';
 import { store } from './redux/store';
 import { logout, setCurrentUser } from './redux/reducers/authSlice';
 import { getProfile } from './redux/reducers/userSlice';
+import ManageQuiz from './pages/Admin/ManageQuiz';
 // pages
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
@@ -27,6 +28,7 @@ const EditProfile = lazy(() => import('./pages/EditProfile'));
 const AdminLogin = lazy(() => import('./pages/Admin/AdminLogin'));
 const ManageUser = lazy(() => import('./pages/Admin/ManageUser'));
 const ManageQuestion = lazy(() => import('./pages/Admin/ManageQuestion'));
+const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard'));
 
 if (localStorage.token) {
   const token = localStorage.token;
@@ -51,7 +53,6 @@ function App() {
     },
     palette: {
       primary: { main: '#0070F3' },
-      secondary: { main: '#FD5D5D' },
     },
   });
 
@@ -86,6 +87,12 @@ function App() {
                 path="/admin/manage-questions"
                 element={<ManageQuestion />}
               />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route path="/admin/manage-quizzes" element={<ManageQuiz />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Route>
           </Routes>
         </Suspense>

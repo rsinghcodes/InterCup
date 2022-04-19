@@ -1,16 +1,16 @@
 const express = require('express');
 
 const authenticatedMiddleware = require('../middleware/authenticated');
-const Question = require('../models/Question');
+const Quiz = require('../models/Quiz');
 const { validateQuestionInput } = require('../validation/validation');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const questions = await Question.find();
+    const quiz = await Quiz.find();
 
-    return res.status(200).json(questions);
+    return res.status(200).json(quiz);
   } catch (error) {
     return res.status(500).json({
       error: 'Server Error',
@@ -28,16 +28,16 @@ router.post('/new', authenticatedMiddleware, async (req, res) => {
       }
 
       // checks, if question already exists
-      let question = await Question.findOne({ question: req.body.question });
+      let quiz = await Quiz.findOne({ question: req.body.question });
 
-      if (question) {
+      if (quiz) {
         return res.status(400).json({ question: 'Question already exists' });
       }
 
       // Save new question
-      question = await Question.create(req.body);
+      quiz = await Quiz.create(req.body);
 
-      return res.status(201).json(question);
+      return res.status(201).json(quiz);
     } else {
       return res.status(403).json({
         error: 'Action not allowed',
@@ -53,18 +53,18 @@ router.post('/new', authenticatedMiddleware, async (req, res) => {
 router.delete('/:id', authenticatedMiddleware, async (req, res) => {
   try {
     if (req.user.role == 'admin') {
-      let question = await Question.findById(req.params.id);
+      let quiz = await Quiz.findById(req.params.id);
 
       // checks, if employee exists or not
-      if (!question) {
+      if (!quiz) {
         return res.status(404).json({
           error: 'No question found!',
         });
       }
 
-      question = await question.remove();
+      quiz = await quiz.remove();
 
-      return res.status(200).json(question);
+      return res.status(200).json(quiz);
     } else {
       return res.status(403).json({
         error: 'Action not allowed',
@@ -81,10 +81,10 @@ router.delete('/:id', authenticatedMiddleware, async (req, res) => {
 router.put('/:id', authenticatedMiddleware, async (req, res) => {
   try {
     if (req.user.role == 'admin') {
-      let question = await Question.findById(req.params.id);
+      let quiz = await Quiz.findById(req.params.id);
 
       // checks, if question exists or not
-      if (!question) {
+      if (!quiz) {
         return res.status(404).json({
           error: 'No question found!',
         });
@@ -96,11 +96,11 @@ router.put('/:id', authenticatedMiddleware, async (req, res) => {
         return res.status(400).json(errors);
       }
 
-      question = await Question.findByIdAndUpdate(req.params.id, req.body, {
+      quiz = await Quiz.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
       });
 
-      return res.status(201).json(question);
+      return res.status(201).json(quiz);
     } else {
       return res.status(403).json({
         error: 'Action not allowed',

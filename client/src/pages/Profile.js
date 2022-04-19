@@ -133,7 +133,7 @@ const Profile = () => {
       <Box display="flex" justifyContent="space-between" my={2}>
         <Button
           variant="contained"
-          color="secondary"
+          color="error"
           disableElevation
           disableRipple
           startIcon={
@@ -181,6 +181,7 @@ const Profile = () => {
             fontSize: { xs: '0.8rem', lg: '1rem' },
             textTransform: 'none',
             borderRadius: '5px',
+            boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
           }}
           component={Link}
           to="/user/edit-profile"

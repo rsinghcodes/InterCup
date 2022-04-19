@@ -25,7 +25,7 @@ export default function ConfirmDialog({ confirmDialog, setConfirmDialog }) {
           </Button>
           <Button
             variant="contained"
-            color="secondary"
+            color="error"
             disableElevation
             onClick={confirmDialog.onConfirm}
             autoFocus

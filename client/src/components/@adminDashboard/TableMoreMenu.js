@@ -38,7 +38,7 @@ export default function TableMoreMenu({
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <MenuItem
-          sx={{ color: 'text.secondary' }}
+          sx={{ color: 'error.main' }}
           onClick={() => {
             setConfirmDialog({
               isOpen: true,
@@ -51,7 +51,7 @@ export default function TableMoreMenu({
             setIsOpen(false);
           }}
         >
-          <ListItemIcon>
+          <ListItemIcon sx={{ color: 'error.main' }}>
             <Iconify icon="eva:trash-2-outline" width={24} height={24} />
           </ListItemIcon>
           <ListItemText

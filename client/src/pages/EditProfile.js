@@ -148,6 +148,7 @@ const EditProfile = () => {
                   fontSize: { xs: '0.8rem', lg: '1rem' },
                   textTransform: 'none',
                   borderRadius: '5px',
+                  boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
                 }}
               >
                 Save

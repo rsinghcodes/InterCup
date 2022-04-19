@@ -132,7 +132,14 @@ export default function Header() {
                   <MenuItem
                     onClick={handleCloseUserMenu}
                     component={Link}
-                    to="/"
+                    to="/admin/manage-quizzes"
+                  >
+                    <Typography textAlign="center">Quizzes</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleCloseUserMenu}
+                    component={Link}
+                    to="/admin/dashboard"
                   >
                     <Typography textAlign="center">Dashboard</Typography>
                   </MenuItem>

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { authSelector } from '../redux/reducers/authSlice';
 
 const Home = () => {
-  const { isAuthenticated } = useSelector(authSelector);
+  const { isAuthenticated, user } = useSelector(authSelector);
 
   return (
     <>
@@ -50,11 +50,17 @@ const Home = () => {
               mt: 3,
               fontSize: { xs: '0.8rem', lg: '1rem' },
               textTransform: 'none',
-              borderRadius: '5px',
+              borderRadius: '8px',
               boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
             }}
             component={RouterLink}
-            to={isAuthenticated ? '/dashboard' : '/user/accounts/login'}
+            to={
+              isAuthenticated
+                ? user.role === 'admin'
+                  ? '/admin/dashboard'
+                  : '/dashboard'
+                : '/user/accounts/login'
+            }
           >
             {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
           </Button>
@@ -115,7 +121,7 @@ const Home = () => {
             mt: 3,
             fontSize: { xs: '0.8rem', lg: '1rem' },
             textTransform: 'none',
-            borderRadius: '5px',
+            borderRadius: '8px',
             boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
           }}
           endIcon={<ArrowForwardIcon />}

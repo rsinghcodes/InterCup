@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const questionSchema = new Schema({
+const quizSchema = new Schema({
   topic: {
     type: String,
     required: true,
@@ -10,6 +10,7 @@ const questionSchema = new Schema({
     required: true,
     unique: true,
   },
+  option: [{ type: String }],
   answer: {
     type: String,
     required: true,
@@ -21,4 +22,4 @@ const questionSchema = new Schema({
   },
 });
 
-module.exports = model('Question', questionSchema);
+module.exports = model('Quiz', quizSchema);
