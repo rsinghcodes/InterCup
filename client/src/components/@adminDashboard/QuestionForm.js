@@ -33,12 +33,19 @@ export default function QuestionForm({ addOrEditQuestion, recordForEdit }) {
     },
     validationSchema: QuestionSchema,
     onSubmit: () => {
-      addOrEditQuestion(values);
+      addOrEditQuestion(values, resetForm);
     },
   });
 
-  const { errors, touched, values, setValues, handleSubmit, getFieldProps } =
-    formik;
+  const {
+    errors,
+    touched,
+    values,
+    resetForm,
+    setValues,
+    handleSubmit,
+    getFieldProps,
+  } = formik;
 
   useEffect(() => {
     if (recordForEdit != null)
@@ -68,7 +75,6 @@ export default function QuestionForm({ addOrEditQuestion, recordForEdit }) {
           </FormControl>
           <TextField
             fullWidth
-            type="email"
             label="Question"
             {...getFieldProps('question')}
             error={Boolean(touched.question && errors.question)}
@@ -76,12 +82,11 @@ export default function QuestionForm({ addOrEditQuestion, recordForEdit }) {
           />
           <TextField
             fullWidth
-            autoComplete="current-password"
             label="Answer"
             multiline
             rows={5}
             {...getFieldProps('answer')}
-            error={Boolean(touched.password && errors.answer)}
+            error={Boolean(touched.answer && errors.answer)}
             helperText={touched.answer && errors.answer}
           />
         </Stack>
@@ -93,9 +98,15 @@ export default function QuestionForm({ addOrEditQuestion, recordForEdit }) {
           variant="contained"
           disableElevation
           loading={isLoading}
-          sx={{ mt: 4 }}
+          sx={{
+            mt: 4,
+            fontSize: { xs: '0.8rem', lg: '1rem' },
+            textTransform: 'none',
+            borderRadius: '8px',
+            boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
+          }}
         >
-          Save
+          Save Question
         </LoadingButton>
       </Form>
     </FormikProvider>

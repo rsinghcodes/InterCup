@@ -59,7 +59,7 @@ const Home = () => {
                 ? user.role === 'admin'
                   ? '/admin/dashboard'
                   : '/dashboard'
-                : '/user/accounts/login'
+                : '/user/accounts/register'
             }
           >
             {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
@@ -165,7 +165,13 @@ const Home = () => {
           <Link
             variant="h6"
             component={RouterLink}
-            to={isAuthenticated ? '/dashboard' : '/user/accounts/register'}
+            to={
+              isAuthenticated
+                ? user.role === 'admin'
+                  ? '/admin/dashboard'
+                  : '/dashboard'
+                : '/user/accounts/register'
+            }
             underline="hover"
           >
             Start Now for Free!

@@ -14,7 +14,6 @@ import setAuthToken from './utils/setAuthToken';
 import { store } from './redux/store';
 import { logout, setCurrentUser } from './redux/reducers/authSlice';
 import { getProfile } from './redux/reducers/userSlice';
-import ManageQuiz from './pages/Admin/ManageQuiz';
 // pages
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
@@ -29,6 +28,8 @@ const AdminLogin = lazy(() => import('./pages/Admin/AdminLogin'));
 const ManageUser = lazy(() => import('./pages/Admin/ManageUser'));
 const ManageQuestion = lazy(() => import('./pages/Admin/ManageQuestion'));
 const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard'));
+const ManageQuiz = lazy(() => import('./pages/Admin/ManageQuiz'));
+const QuizForm = lazy(() => import('./pages/Admin/QuizForm'));
 
 if (localStorage.token) {
   const token = localStorage.token;
@@ -93,6 +94,9 @@ function App() {
             </Route>
             <Route element={<RequireAuth />}>
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route path="/admin/quiz/new" element={<QuizForm />} />
             </Route>
           </Routes>
         </Suspense>

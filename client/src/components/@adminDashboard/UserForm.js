@@ -131,6 +131,12 @@ export default function UserForm({ addOrEditUser, recordForEdit }) {
                 variant="contained"
                 loading={isSubmitting}
                 disableElevation
+                sx={{
+                  fontSize: { xs: '0.8rem', lg: '1rem' },
+                  textTransform: 'none',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
+                }}
               >
                 Save User
               </LoadingButton>

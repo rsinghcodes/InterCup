@@ -1,5 +1,6 @@
 import { filter } from 'lodash';
 import { useEffect, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Card,
@@ -210,6 +211,8 @@ export default function ManageQuiz() {
                 borderRadius: '8px',
                 boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
               }}
+              component={RouterLink}
+              to="/admin/quiz/new"
             >
               New Quiz
             </Button>
