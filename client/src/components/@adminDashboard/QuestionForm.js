@@ -62,12 +62,12 @@ export default function QuestionForm({ addOrEditQuestion, recordForEdit }) {
           <FormControl fullWidth>
             <InputLabel>Topic</InputLabel>
             <Select label="Topic" {...getFieldProps('topic')}>
-              <MenuItem value="JavaScript">JavaScript</MenuItem>
-              <MenuItem value="Python">Python</MenuItem>
-              <MenuItem value="Java">Java</MenuItem>
-              <MenuItem value="C++">C++</MenuItem>
-              <MenuItem value="Reactjs">Reactjs</MenuItem>
-              <MenuItem value="Nodejs">Nodejs</MenuItem>
+              <MenuItem value="javascript">JavaScript</MenuItem>
+              <MenuItem value="python">Python</MenuItem>
+              <MenuItem value="java">Java</MenuItem>
+              <MenuItem value="c-plus-plus">C++</MenuItem>
+              <MenuItem value="reactjs">Reactjs</MenuItem>
+              <MenuItem value="nodejs">Nodejs</MenuItem>
             </Select>
             <FormHelperText error={Boolean(touched.topic && errors.topic)}>
               {touched.topic && errors.topic}

@@ -11,39 +11,19 @@ import {
   FormHelperText,
   Button,
   Container,
-  InputAdornment,
-  IconButton,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 
 const QuizForm = () => {
   const dispatch = useDispatch();
-  let [options, setOptions] = useState([]);
-
-  const addChoice = () => {
-    setOptions([...options, '']);
-  };
-
-  const removeChoice = (num) => {
-    let mutable = [...options];
-    mutable.splice(num, 1);
-    setOptions(mutable);
-  };
 
   const QuizSchema = Yup.object().shape({
     topic: Yup.string().required('Topic is required'),
     question: Yup.string().required('Question is required'),
     answer: Yup.string().required('Answer is required'),
-    options: Yup.mixed()
-      .when('isArray', {
-        is: Array.isArray,
-        then: Yup.array().of(Yup.string()),
-        otherwise: Yup.string(),
-      })
-      .required('Option is required'),
+    options: Yup.array().of(Yup.string()).required('Option is required'),
   });
 
   const formik = useFormik({
@@ -78,12 +58,12 @@ const QuizForm = () => {
               <FormControl fullWidth>
                 <InputLabel>Topic</InputLabel>
                 <Select label="Topic" {...getFieldProps('topic')}>
-                  <MenuItem value="JavaScript">JavaScript</MenuItem>
-                  <MenuItem value="Python">Python</MenuItem>
-                  <MenuItem value="Java">Java</MenuItem>
-                  <MenuItem value="C++">C++</MenuItem>
-                  <MenuItem value="Reactjs">Reactjs</MenuItem>
-                  <MenuItem value="Nodejs">Nodejs</MenuItem>
+                  <MenuItem value="javascript">JavaScript</MenuItem>
+                  <MenuItem value="python">Python</MenuItem>
+                  <MenuItem value="java">Java</MenuItem>
+                  <MenuItem value="c-plus-plus">C++</MenuItem>
+                  <MenuItem value="reactjs">Reactjs</MenuItem>
+                  <MenuItem value="nodejs">Nodejs</MenuItem>
                 </Select>
                 <FormHelperText error={Boolean(touched.topic && errors.topic)}>
                   {touched.topic && errors.topic}
@@ -103,47 +83,11 @@ const QuizForm = () => {
                 error={Boolean(touched.answer && errors.answer)}
                 helperText={touched.answer && errors.answer}
               />
-              {options.map((option, index) => (
-                <TextField
-                  key={'Choice ' + (index + 1)}
-                  fullWidth
-                  label={'Choice ' + (index + 1)}
-                  {...getFieldProps(`options[${index}]`)}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={() => removeChoice(index)}
-                          edge="end"
-                        >
-                          <CloseIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  error={Boolean(touched.options && errors.options)}
-                  helperText={touched.options && errors.options}
-                />
-              ))}
+              <TextField fullWidth label="Choice 1" />
+              <TextField fullWidth label="Choice 2" />
+              <TextField fullWidth label="Choice 3" />
+              <TextField fullWidth label="Choice 4" />
             </Stack>
-            <Button
-              variant="contained"
-              color="primary"
-              disableElevation
-              disableRipple
-              sx={{
-                px: 6,
-                py: 1,
-                mt: 3,
-                fontSize: { xs: '0.8rem', lg: '1rem' },
-                textTransform: 'none',
-                borderRadius: '8px',
-                boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
-              }}
-              onClick={addChoice}
-            >
-              Add Choice
-            </Button>
 
             <LoadingButton
               fullWidth

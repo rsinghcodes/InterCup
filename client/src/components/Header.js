@@ -75,7 +75,9 @@ export default function Header() {
       <AppBar
         position="static"
         color="transparent"
-        sx={{ px: { xs: 0.5, sm: 2, md: 4, lg: 10 } }}
+        sx={{
+          px: { xs: 0.5, sm: 2, md: 4, lg: 10 },
+        }}
       >
         <Toolbar>
           <Typography

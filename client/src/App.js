@@ -19,6 +19,8 @@ const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Topics = lazy(() => import('./pages/Topics'));
+const Quiz = lazy(() => import('./pages/Quiz'));
+const Question = lazy(() => import('./pages/Question'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -78,6 +80,11 @@ function App() {
             <Route path="/topics/practice/" element={<Topics />} />
             <Route path="/user/accounts/login" element={<Login />} />
             <Route path="/user/accounts/register" element={<Register />} />
+            <Route path="/topics/practice/:topicname/quiz" element={<Quiz />} />
+            <Route
+              path="/topics/practice/:topicname/theory"
+              element={<Question />}
+            />
 
             <Route path="/admin/account/login" element={<AdminLogin />} />
             <Route element={<RequireAuth />}>

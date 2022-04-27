@@ -77,7 +77,7 @@ function applySortFilter(array, comparator, query) {
     return filter(
       array,
       (_question) =>
-        _question.topic.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        _question.question.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
@@ -222,7 +222,7 @@ export default function ManageQuiz() {
             <ListToolbar
               filterName={filterName}
               onFilterName={handleFilterByName}
-              placeholder="Search by Topic..."
+              placeholder="Search by question..."
             />
 
             <TableContainer>
