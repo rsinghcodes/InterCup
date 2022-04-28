@@ -221,6 +221,7 @@ export default function Header() {
                 disableRipple
                 sx={{
                   borderRadius: '5px',
+                  textTransform: 'none',
                 }}
                 component={Link}
                 to="/user/accounts/login"

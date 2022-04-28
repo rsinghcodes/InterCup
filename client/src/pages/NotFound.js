@@ -12,10 +12,8 @@ const NotFound = () => {
       flexDirection="column"
       minHeight="90vh"
     >
-      <Typography variant="subtitle1" component="p">
-        Page Not Found!
-      </Typography>
-      <Typography variant="h3" component="h3" my="0.5rem" fontWeight={600}>
+      <img alt="aa" src="/assets/images/NotFound.png" width={250} />
+      <Typography variant="h3" component="h3" my={3} fontWeight={600}>
         404
       </Typography>
       <Typography

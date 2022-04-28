@@ -9,21 +9,26 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-  Button,
   Container,
+  Button,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { useFormik, Form, FormikProvider } from 'formik';
-import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
+// Redux
+import { useDispatch } from 'react-redux';
+import { createQuiz } from '../../redux/reducers/quizSlice';
 
 const QuizForm = () => {
   const dispatch = useDispatch();
+  let [answers, setAnswers] = useState([]);
 
   const QuizSchema = Yup.object().shape({
     topic: Yup.string().required('Topic is required'),
     question: Yup.string().required('Question is required'),
     answer: Yup.string().required('Answer is required'),
-    options: Yup.array().of(Yup.string()).required('Option is required'),
   });
 
   const formik = useFormik({
@@ -35,13 +40,30 @@ const QuizForm = () => {
     },
     validationSchema: QuizSchema,
     onSubmit: () => {
-      console.log(values);
+      dispatch(createQuiz({ ...values, options: answers }));
       resetForm();
+      setAnswers([]);
     },
   });
 
   const { errors, touched, values, resetForm, handleSubmit, getFieldProps } =
     formik;
+
+  let handleQuestion = (e, num) => {
+    let mutable = [...answers];
+    mutable[num] = e.target.value;
+    setAnswers(mutable);
+  };
+
+  let removeChoice = (num) => {
+    let mutable = [...answers];
+    mutable.splice(num, 1);
+    setAnswers(mutable);
+  };
+
+  let addChoice = () => {
+    setAnswers([...answers, '']);
+  };
 
   return (
     <Box
@@ -83,10 +105,45 @@ const QuizForm = () => {
                 error={Boolean(touched.answer && errors.answer)}
                 helperText={touched.answer && errors.answer}
               />
-              <TextField fullWidth label="Choice 1" />
-              <TextField fullWidth label="Choice 2" />
-              <TextField fullWidth label="Choice 3" />
-              <TextField fullWidth label="Choice 4" />
+
+              <Button
+                fullWidth
+                size="large"
+                variant="contained"
+                disableElevation
+                sx={{
+                  mt: 4,
+                  fontSize: { xs: '0.8rem', lg: '1rem' },
+                  textTransform: 'none',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 14px 0 rgb(0 118 255 / 39%)',
+                }}
+                onClick={addChoice}
+              >
+                Add Choice
+              </Button>
+
+              {answers.map((answer, index) => (
+                <TextField
+                  key={'Choice ' + (index + 1)}
+                  fullWidth
+                  label={'Choice ' + (index + 1)}
+                  value={answer}
+                  onChange={(e) => handleQuestion(e, index)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => removeChoice(index)}
+                          edge="end"
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              ))}
             </Stack>
 
             <LoadingButton

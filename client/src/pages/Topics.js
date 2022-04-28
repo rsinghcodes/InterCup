@@ -13,7 +13,7 @@ const Topics = () => {
       sx={{ py: 5 }}
     >
       <Grid container justifyContent="center" alignItems="center" gap={4}>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} sm={5} md={3}>
           <CustomCard
             topicName="JavaScript"
             quizLink="/topics/practice/javascript/quiz"
@@ -22,7 +22,7 @@ const Topics = () => {
             Practice JavaScript quizzes and theory question
           </CustomCard>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} sm={5} md={3}>
           <CustomCard
             topicName="Python"
             quizLink="/topics/practice/python/quiz"
@@ -31,7 +31,7 @@ const Topics = () => {
             Practice Python quizzes and theory question
           </CustomCard>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} sm={5} md={3}>
           <CustomCard
             topicName={`Reactjs`}
             quizLink="/topics/practice/reactjs/quiz"
@@ -40,7 +40,7 @@ const Topics = () => {
             Practice Reactjs quizzes and theory question
           </CustomCard>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} sm={5} md={3}>
           <CustomCard
             topicName={`Java`}
             quizLink="/topics/practice/java/quiz"
@@ -49,7 +49,7 @@ const Topics = () => {
             Practice Java quizzes and theory question
           </CustomCard>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} sm={5} md={3}>
           <CustomCard
             topicName={`C++`}
             quizLink="/topics/practice/c-plus-plus/quiz"
@@ -58,7 +58,7 @@ const Topics = () => {
             Practice C++ quizzes and theory question
           </CustomCard>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} sm={5} md={3}>
           <CustomCard
             topicName={`Nodejs`}
             quizLink="/topics/practice/nodejs/quiz"

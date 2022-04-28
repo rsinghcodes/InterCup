@@ -145,13 +145,13 @@ const Home = () => {
             </HomeCard>
           </Grid>
           <Grid item xs={12} md={3}>
-            <HomeCard heading="Interviewer's Favorite questions">
+            <HomeCard heading="Interviewer's Favorite">
               Practice the most Favorite questions asked by the interviewer.
             </HomeCard>
           </Grid>
           <Grid item xs={12} md={3}>
-            <HomeCard heading="Complete Interview Questions">
-              Be prepared for all types of questions.
+            <HomeCard heading="Complete Interview">
+              Be prepared for all types of interview questions.
             </HomeCard>
           </Grid>
         </Grid>
