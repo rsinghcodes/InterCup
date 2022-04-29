@@ -44,8 +44,9 @@ const TABLE_HEAD = [
   { id: 'fullname', label: 'Full Name', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'profession', label: 'Profession', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
   { id: 'global_rank', label: 'Global Rank', alignRight: false },
+  { id: 'isVerified', label: 'Verified', alignRight: false },
+  { id: 'isAccess', label: 'HasAccess', alignRight: false },
   { id: '' },
 ];
 
@@ -241,8 +242,9 @@ export default function ManageUser() {
                         fullname,
                         email,
                         profession,
-                        isVerified,
                         global_rank,
+                        isVerified,
+                        isAccess,
                       } = row;
 
                       return (
@@ -254,10 +256,13 @@ export default function ManageUser() {
                           </TableCell>
                           <TableCell align="left">{email}</TableCell>
                           <TableCell align="left">{profession}</TableCell>
+                          <TableCell align="left">{global_rank}</TableCell>
                           <TableCell align="left">
                             {isVerified ? 'Yes' : 'No'}
                           </TableCell>
-                          <TableCell align="left">{global_rank}</TableCell>
+                          <TableCell align="left">
+                            {isAccess ? 'Yes' : 'No'}
+                          </TableCell>
 
                           <TableCell align="right">
                             <TableMoreMenu

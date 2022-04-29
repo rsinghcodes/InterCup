@@ -19,6 +19,10 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  isAccess: {
+    type: Boolean,
+    default: true,
+  },
   global_rank: {
     type: Number,
     default: 0,

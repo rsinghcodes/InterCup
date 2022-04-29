@@ -102,6 +102,10 @@ router.post('/login', async (req, res) => {
             message: 'An Email has been sent, please verify',
           });
         }
+      } else if (!user.isAccess) {
+        return res.status(403).json({
+          message: 'Your account access has been denied!',
+        });
       } else {
         const accessToken = createToken(user);
 

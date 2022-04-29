@@ -27,6 +27,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Profile = lazy(() => import('./pages/Profile'));
 const EditProfile = lazy(() => import('./pages/EditProfile'));
+const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
 // Admin
 const AdminLogin = lazy(() => import('./pages/Admin/AdminLogin'));
 const ManageUser = lazy(() => import('./pages/Admin/ManageUser'));
@@ -83,6 +84,10 @@ function App() {
               <Route path="/topics/practice/" element={<Topics />} />
               <Route path="/user/accounts/login" element={<Login />} />
               <Route path="/user/accounts/register" element={<Register />} />
+              <Route
+                path="/auth/user/:userId/verify/:tokenId"
+                element={<VerifyEmail />}
+              />
               <Route
                 path="/topics/practice/:topicname/quiz"
                 element={<Quiz />}

@@ -7,10 +7,12 @@ const router = express.Router();
 
 router.get('/:id/verify/:token/', async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await User.findById(req.params.id);
 
     if (!user) {
-      return res.status(400).json({ error: 'Invalid link' });
+      return res
+        .status(400)
+        .json({ error: 'Link has been expired or Invalid link' });
     }
 
     const token = await Token.findOne({
@@ -18,9 +20,12 @@ router.get('/:id/verify/:token/', async (req, res) => {
       token: req.params.token,
     });
 
-    if (!token) return res.status(400).json({ error: 'Invalid link' });
+    if (!token)
+      return res
+        .status(400)
+        .json({ error: 'Link has been expired or Invalid link' });
 
-    await User.updateOne({ _id: user._id, isVerified: true });
+    await User.updateOne({ _id: user._id }, { isVerified: true });
 
     await token.remove();
 

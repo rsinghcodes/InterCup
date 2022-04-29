@@ -54,6 +54,21 @@ export const loginAdmin = createAsyncThunk(
   }
 );
 
+export const verifyUserEmail = createAsyncThunk(
+  'user/verifyEmail',
+  async ({ userId, tokenId }, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `/auth/user/${userId}/verify/${tokenId}`
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -114,6 +129,19 @@ const authSlice = createSlice({
       state.isLoading = true;
     },
     [registerUser.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = payload;
+    },
+    [verifyUserEmail.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.message = payload;
+    },
+    [verifyUserEmail.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [verifyUserEmail.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.isError = true;
       state.error = payload;
