@@ -138,4 +138,26 @@ router.post('/add-user', authenticatedMiddleware, async (req, res) => {
   }
 });
 
+router.get('/change-access/:id', authenticatedMiddleware, async (req, res) => {
+  try {
+    if (req.user.role == 'admin') {
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.id },
+        [{ $set: { isAccess: { $eq: [false, '$isAccess'] } } }],
+        { new: true }
+      );
+
+      return res.status(200).json({ user });
+    } else {
+      return res.status(403).json({
+        error: 'Action not allowed',
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Server Error',
+    });
+  }
+});
+
 module.exports = router;

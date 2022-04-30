@@ -1,17 +1,32 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import { Card, CardContent, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  Stack,
+  Typography,
+  Box,
+} from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+// components
+import Spinner from '../components/Spinner';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchQuestions,
+  likeQues,
   questionSelector,
+  unlikeQues,
 } from '../redux/reducers/questionSlice';
+import { authSelector } from '../redux/reducers/authSlice';
 
 export default function Question() {
   const { topicname } = useParams();
   const dispatch = useDispatch();
+  const { user } = useSelector(authSelector);
   const { questions, isLoading } = useSelector(questionSelector);
 
   useEffect(() => {
@@ -33,9 +48,7 @@ export default function Question() {
       </Typography>
       <Stack spacing={2} mb={2} mt={3}>
         {isLoading ? (
-          <Typography variant="subtitle1" component="p">
-            Please wait..., Questions loading...
-          </Typography>
+          <Spinner />
         ) : (
           questions
             .filter((x) => topicname === x.topic)
@@ -53,6 +66,44 @@ export default function Question() {
                     <span style={{ fontWeight: '600' }}>Answer:</span>{' '}
                     {ques.answer}
                   </Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                    mt={2}
+                  >
+                    {ques.likes.includes(user.id) ? (
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<ThumbUpAltIcon />}
+                        disableElevation
+                        sx={{ textTransform: 'none', mr: 2 }}
+                        onClick={() => dispatch(unlikeQues(ques._id))}
+                      >
+                        {ques.likes.length}
+                      </Button>
+                    ) : (
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<ThumbUpOffAltIcon />}
+                        disableElevation
+                        sx={{ textTransform: 'none', mr: 2 }}
+                        onClick={() => dispatch(likeQues(ques._id))}
+                      >
+                        {ques.likes.length}
+                      </Button>
+                    )}
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      startIcon={<FavoriteBorderIcon />}
+                      sx={{ textTransform: 'none' }}
+                    >
+                      Add to favorite
+                    </Button>
+                  </Box>
                 </CardContent>
               </Card>
             ))

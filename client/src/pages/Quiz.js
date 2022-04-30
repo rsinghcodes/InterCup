@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuizzes, quizSelector } from '../redux/reducers/quizSlice';
 // components
 import Notification from '../components/Notification';
+import Spinner from '../components/Spinner';
 
 const Quiz = () => {
   const { topicname } = useParams();
@@ -78,9 +79,7 @@ const Quiz = () => {
           <Chip label={`Score: ${score}`} />
         </Box>
         {isLoading ? (
-          <Typography variant="subtitle1" component="p">
-            Please wait..., Questions loading...
-          </Typography>
+          <Spinner />
         ) : (
           <Box
             boxShadow={0}

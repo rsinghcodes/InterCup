@@ -66,6 +66,38 @@ export const updateQuestion = createAsyncThunk(
   }
 );
 
+export const likeQues = createAsyncThunk(
+  'question/like',
+  async (questionId, thunkAPI) => {
+    try {
+      const response = await axios.patch('/api/questions/like', questionId, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const unlikeQues = createAsyncThunk(
+  'question/unlike',
+  async (questionId, thunkAPI) => {
+    try {
+      const response = await axios.patch('/api/questions/unlike', questionId, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const questionSlice = createSlice({
   name: 'question',
   initialState: {
@@ -115,6 +147,20 @@ const questionSlice = createSlice({
     },
     [deleteQuestion.pending]: (state) => {
       state.isLoading = true;
+    },
+    [likeQues.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.questions = state.questions.map((x) =>
+        x._id === payload._id ? payload : x
+      );
+    },
+    [unlikeQues.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.questions = state.questions.map((x) =>
+        x._id === payload._id ? payload : x
+      );
     },
   },
 });

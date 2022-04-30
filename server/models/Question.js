@@ -19,6 +19,7 @@ const questionSchema = new Schema({
     required: true,
     default: 1,
   },
+  likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 module.exports = model('Question', questionSchema);

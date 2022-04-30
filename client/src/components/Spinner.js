@@ -1,5 +1,5 @@
 import React from 'react';
-import { Backdrop, CircularProgress } from '@mui/material';
+import { Backdrop, CircularProgress, Typography } from '@mui/material';
 
 const Spinner = () => {
   return (
@@ -10,6 +10,9 @@ const Spinner = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+      <Typography variant="subtitle1" component="p">
+        Please wait..., loading...
+      </Typography>
     </div>
   );
 };

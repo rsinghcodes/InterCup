@@ -20,6 +20,7 @@ import {
 import Iconify from '../components/Iconify';
 import ConfirmDialog from '../components/ConfirmDialog';
 import Notification from '../components/Notification';
+import Spinner from '../components/Spinner';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -46,11 +47,7 @@ const Profile = () => {
         Profile
       </Typography>
       {isLoading ? (
-        <Box display="flex" justifyContent="center" alignItems="center" my={2}>
-          <Typography variant="subtitle1" component="p">
-            Data Loading...
-          </Typography>
-        </Box>
+        <Spinner />
       ) : (
         <Box display="flex" justifyContent="center" alignItems="center" my={2}>
           <Card variant="outlined">

@@ -13,7 +13,9 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile, userSelector } from '../redux/reducers/userSlice';
 import { useFormik, Form, FormikProvider } from 'formik';
+// components
 import Iconify from '../components/Iconify';
+import Spinner from '../components/Spinner';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -58,11 +60,7 @@ const EditProfile = () => {
         Edit Profile
       </Typography>
       {isLoading ? (
-        <Box display="flex" justifyContent="center" alignItems="center" my={2}>
-          <Typography variant="subtitle1" component="p">
-            Data Loading...
-          </Typography>
-        </Box>
+        <Spinner />
       ) : (
         <FormikProvider value={formik}>
           <Form autoComplete="off" noValidate onSubmit={handleSubmit}>

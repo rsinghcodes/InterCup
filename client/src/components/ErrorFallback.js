@@ -29,10 +29,10 @@ export default function ErrorFallback() {
           borderRadius: '5px',
         }}
         onClick={() => {
-          window.location.reload();
+          window.location.href = '/';
         }}
       >
-        Refresh page
+        Return Home
       </Button>
     </Box>
   );

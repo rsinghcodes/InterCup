@@ -19,6 +19,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import {
   adminSelector,
+  changeUserAccountAccess,
   createUser,
   getUsersProfile,
 } from '../../redux/reducers/adminSlice';
@@ -37,6 +38,7 @@ import Popup from '../../components/Popup';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import Notification from '../../components/Notification';
 import Iconify from '../../components/Iconify';
+import Label from '../../components/Label';
 
 // ----------------------------------------------------------------------
 
@@ -46,7 +48,7 @@ const TABLE_HEAD = [
   { id: 'profession', label: 'Profession', alignRight: false },
   { id: 'global_rank', label: 'Global Rank', alignRight: false },
   { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'isAccess', label: 'HasAccess', alignRight: false },
+  { id: 'isAccess', label: 'Status', alignRight: false },
   { id: '' },
 ];
 
@@ -261,9 +263,18 @@ export default function ManageUser() {
                             {isVerified ? 'Yes' : 'No'}
                           </TableCell>
                           <TableCell align="left">
-                            {isAccess ? 'Yes' : 'No'}
+                            <Label
+                              variant="ghost"
+                              onClick={() =>
+                                dispatch(changeUserAccountAccess(_id))
+                              }
+                              color={
+                                (isAccess === false && 'error') || 'success'
+                              }
+                            >
+                              {isAccess ? 'Active' : 'Banned'}
+                            </Label>
                           </TableCell>
-
                           <TableCell align="right">
                             <TableMoreMenu
                               openInPopup={openInPopup}

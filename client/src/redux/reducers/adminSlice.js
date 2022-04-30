@@ -35,6 +35,23 @@ export const createUser = createAsyncThunk(
   }
 );
 
+export const changeUserAccountAccess = createAsyncThunk(
+  'user/changeAccess',
+  async (userId, thunkAPI) => {
+    try {
+      const response = await axios.get(`/api/admin/change-access/${userId}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: 'admin',
   initialState: {
@@ -96,6 +113,23 @@ const adminSlice = createSlice({
       state.isLoading = true;
     },
     [deleteUserProfile.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = payload;
+    },
+    [changeUserAccountAccess.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.users = state.users.map((x) =>
+        x._id === payload.user._id
+          ? { ...payload.user, isAccess: payload.user.isAccess }
+          : x
+      );
+    },
+    [changeUserAccountAccess.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [changeUserAccountAccess.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.isError = true;
       state.error = payload;
