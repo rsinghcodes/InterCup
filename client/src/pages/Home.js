@@ -140,17 +140,23 @@ const Home = () => {
       >
         <Grid container justifyContent="center" alignItems="center" gap={4}>
           <Grid item xs={12} md={3}>
-            <HomeCard heading="Practice quizzes">
+            <HomeCard
+              heading="Practice quizzes"
+              icon="material-symbols:quiz-sharp"
+            >
               Practice quizzes and share with friends.
             </HomeCard>
           </Grid>
           <Grid item xs={12} md={3}>
-            <HomeCard heading="Interviewer's Favorite">
+            <HomeCard
+              heading="Interviewer's Favorite"
+              icon="carbon:favorite-filled"
+            >
               Practice the most Favorite questions asked by the interviewer.
             </HomeCard>
           </Grid>
           <Grid item xs={12} md={3}>
-            <HomeCard heading="Complete Interview">
+            <HomeCard heading="Complete Interview" icon="carbon:task-complete">
               Be prepared for all types of interview questions.
             </HomeCard>
           </Grid>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Card, Typography } from '@mui/material';
-import { Icon } from '@iconify/react';
+import { Card, Typography } from '@mui/material';
+import Iconify from './Iconify';
 
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
@@ -25,16 +25,11 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   )} 0%, ${alpha(theme.palette.primary.dark, 0.24)} 100%)`,
 }));
 
-const HomeCard = ({ heading, children }) => {
+const HomeCard = ({ heading, icon, children }) => {
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Box
-          component={Icon}
-          icon="ant-design:android-filled"
-          width={24}
-          height={24}
-        />
+        <Iconify icon={icon} width={30} height={30} />
       </IconWrapperStyle>
       <Typography variant="h6">{heading}</Typography>
       <Typography variant="subtitle1" sx={{ opacity: 0.72 }} mt={2}>

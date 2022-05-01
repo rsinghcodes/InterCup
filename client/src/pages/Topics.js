@@ -24,7 +24,7 @@ const Topics = () => {
       <Grid container justifyContent="center" alignItems="center" gap={4}>
         <Grid item xs={12} sm={5} md={3}>
           <CustomCard
-            topicName="JavaScript"
+            icon="logos:javascript"
             quizLink="/topics/practice/javascript/quiz"
             theoryLink="/topics/practice/javascript/theory"
           >
@@ -33,7 +33,7 @@ const Topics = () => {
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <CustomCard
-            topicName="Python"
+            icon="vscode-icons:file-type-python"
             quizLink="/topics/practice/python/quiz"
             theoryLink="/topics/practice/python/theory"
           >
@@ -42,7 +42,7 @@ const Topics = () => {
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <CustomCard
-            topicName={`Reactjs`}
+            icon="vscode-icons:file-type-reactjs"
             quizLink="/topics/practice/reactjs/quiz"
             theoryLink="/topics/practice/reactjs/theory"
           >
@@ -51,7 +51,7 @@ const Topics = () => {
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <CustomCard
-            topicName={`Java`}
+            icon="logos:java"
             quizLink="/topics/practice/java/quiz"
             theoryLink="/topics/practice/java/theory"
           >
@@ -60,7 +60,7 @@ const Topics = () => {
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <CustomCard
-            topicName={`C++`}
+            icon="logos:c-plusplus"
             quizLink="/topics/practice/c-plus-plus/quiz"
             theoryLink="/topics/practice/c-plus-plus/theory"
           >
@@ -69,7 +69,7 @@ const Topics = () => {
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <CustomCard
-            topicName={`Nodejs`}
+            icon="logos:nodejs-icon"
             quizLink="/topics/practice/nodejs/quiz"
             theoryLink="/topics/practice/nodejs/theory"
           >
