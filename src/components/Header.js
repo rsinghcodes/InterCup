@@ -183,9 +183,9 @@ export default function Header() {
                   <MenuItem
                     onClick={handleCloseUserMenu}
                     component={Link}
-                    to="/user/edit-profile"
+                    to="/user/favorites"
                   >
-                    <Typography textAlign="center">Update Profile</Typography>
+                    <Typography textAlign="center">Favorites</Typography>
                   </MenuItem>
                   <MenuItem
                     onClick={handleCloseUserMenu}

@@ -59,7 +59,7 @@ export const verifyUserEmail = createAsyncThunk(
   async ({ userId, tokenId }, thunkAPI) => {
     try {
       const response = await axios.get(
-        `/auth/user/${userId}/verify/${tokenId}`
+        `/api/auth/user/${userId}/verify/${tokenId}`
       );
 
       return response.data;
