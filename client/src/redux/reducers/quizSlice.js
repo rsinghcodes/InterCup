@@ -1,14 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchQuizzes = createAsyncThunk('quiz/fetch', async (thunkAPI) => {
-  try {
-    const response = await axios.get('/api/quiz');
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data);
+export const fetchQuizzes = createAsyncThunk(
+  'quiz/fetch',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get('/api/quiz');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 export const createQuiz = createAsyncThunk(
   'quiz/new',

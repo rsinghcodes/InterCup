@@ -15,7 +15,6 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuizzes, quizSelector } from '../redux/reducers/quizSlice';
 // components
-import Notification from '../components/Notification';
 import Spinner from '../components/Spinner';
 
 const Quiz = () => {
@@ -26,11 +25,6 @@ const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
-  const [notify, setNotify] = useState({
-    isOpen: false,
-    message: '',
-    type: 'success',
-  });
 
   const handleRadioChange = (event) => {
     setCurrentAnswer(event.target.value);
@@ -40,12 +34,6 @@ const Quiz = () => {
     event.preventDefault();
     if (currentAnswer && currentAnswer === quizzes[currentQuestion].answer) {
       setScore(score + 1);
-    } else {
-      setNotify({
-        isOpen: true,
-        message: 'Oh! You clicked wrong option',
-        type: 'error',
-      });
     }
 
     const nextQuestion = currentQuestion + 1;
@@ -63,7 +51,6 @@ const Quiz = () => {
 
   return (
     <>
-      <Notification notify={notify} setNotify={setNotify} />
       <Box
         display="flex"
         justifyContent="center"

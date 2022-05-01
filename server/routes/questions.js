@@ -114,39 +114,39 @@ router.put('/:id', authenticatedMiddleware, async (req, res) => {
 });
 
 router.patch('/like', authenticatedMiddleware, async (req, res) => {
-  Question.findByIdAndUpdate(
-    req.body.questionId,
-    {
-      $push: { likes: req.user._id },
-    },
-    {
-      new: true,
-    }
-  ).exec((err, result) => {
-    if (err) {
-      return res.status(422).json({ error: err });
-    } else {
-      return res.status(201).json(result);
-    }
-  });
+  try {
+    const question = await Question.findByIdAndUpdate(
+      req.body.questionId,
+      {
+        $push: { likes: req.user._id },
+      },
+      { new: true }
+    );
+
+    return res.status(201).json(question);
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
 });
 
 router.patch('/unlike', authenticatedMiddleware, async (req, res) => {
-  Question.findByIdAndUpdate(
-    req.body.questionId,
-    {
-      $pull: { likes: req.user._id },
-    },
-    {
-      new: true,
-    }
-  ).exec((err, result) => {
-    if (err) {
-      return res.status(422).json({ error: err });
-    } else {
-      return res.status(201).json(result);
-    }
-  });
+  try {
+    const question = await Question.findByIdAndUpdate(
+      req.body.questionId,
+      {
+        $pull: { likes: req.user._id },
+      },
+      { new: true }
+    );
+
+    return res.status(201).json(question);
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
 });
 
 module.exports = router;

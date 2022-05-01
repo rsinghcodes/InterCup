@@ -33,6 +33,7 @@ const userSchema = new Schema({
   college: {
     type: String,
   },
+  favorites: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
   role: {
     type: String,
     required: true,

@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { authSelector, logout } from '../redux/reducers/authSlice';
+import { removeUser } from '../redux/reducers/userSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -148,6 +149,7 @@ export default function Header() {
                   <MenuItem
                     onClick={() => {
                       dispatch(logout());
+                      dispatch(removeUser());
                       handleCloseUserMenu();
                     }}
                   >

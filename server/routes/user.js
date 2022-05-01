@@ -133,6 +133,42 @@ router.get('/profile', authenticatedMiddleware, async (req, res) => {
   }
 });
 
+router.patch('/add-favorite', authenticatedMiddleware, async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      req.user._id,
+      {
+        $push: { favorites: req.body.questionId },
+      },
+      { new: true }
+    );
+
+    return res.status(201).json(user);
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
+});
+
+router.patch('/delete-favorite', authenticatedMiddleware, async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull: { favorites: req.body.questionId },
+      },
+      { new: true }
+    );
+
+    return res.status(201).json(user);
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
+});
+
 router.delete('/:id', authenticatedMiddleware, async (req, res) => {
   try {
     let user = await User.findById(req.params.id);

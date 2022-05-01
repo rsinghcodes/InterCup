@@ -50,6 +50,48 @@ export const updateUserProfile = createAsyncThunk(
   }
 );
 
+export const addFavoriteQues = createAsyncThunk(
+  'user/addFavorite',
+  async (questionId, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        '/api/user/add-favorite',
+        { questionId },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const removeFavoriteQues = createAsyncThunk(
+  'user/removeFavorite',
+  async (questionId, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        '/api/user/delete-favorite',
+        { questionId },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -59,7 +101,11 @@ const userSlice = createSlice({
     user: {},
     error: {},
   },
-  reducers: {},
+  reducers: {
+    removeUser: (state) => {
+      state.user = null;
+    },
+  },
   extraReducers: {
     [getProfile.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
@@ -100,9 +146,20 @@ const userSlice = createSlice({
       state.isError = true;
       state.error = payload;
     },
+    [addFavoriteQues.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.user = payload;
+    },
+    [removeFavoriteQues.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.user = payload;
+    },
   },
 });
 
+export const { removeUser } = userSlice.actions;
 export const userSelector = (state) => state.user;
 
 export default userSlice.reducer;

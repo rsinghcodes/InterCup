@@ -9,6 +9,7 @@ import {
   Box,
 } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 // components
@@ -22,11 +23,17 @@ import {
   unlikeQues,
 } from '../redux/reducers/questionSlice';
 import { authSelector } from '../redux/reducers/authSlice';
+import {
+  addFavoriteQues,
+  removeFavoriteQues,
+  userSelector,
+} from '../redux/reducers/userSlice';
 
 export default function Question() {
   const { topicname } = useParams();
   const dispatch = useDispatch();
-  const { user } = useSelector(authSelector);
+  const { user } = useSelector(userSelector);
+  const { isAuthenticated } = useSelector(authSelector);
   const { questions, isLoading } = useSelector(questionSelector);
 
   useEffect(() => {
@@ -72,17 +79,30 @@ export default function Question() {
                     alignItems="center"
                     mt={2}
                   >
-                    {ques.likes.includes(user.id) ? (
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        startIcon={<ThumbUpAltIcon />}
-                        disableElevation
-                        sx={{ textTransform: 'none', mr: 2 }}
-                        onClick={() => dispatch(unlikeQues(ques._id))}
-                      >
-                        {ques.likes.length}
-                      </Button>
+                    {isAuthenticated ? (
+                      ques.likes.includes(user._id) ? (
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<ThumbUpAltIcon />}
+                          disableElevation
+                          sx={{ textTransform: 'none', mr: 2 }}
+                          onClick={() => dispatch(unlikeQues(ques._id))}
+                        >
+                          {ques.likes.length}
+                        </Button>
+                      ) : (
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<ThumbUpOffAltIcon />}
+                          disableElevation
+                          sx={{ textTransform: 'none', mr: 2 }}
+                          onClick={() => dispatch(likeQues(ques._id))}
+                        >
+                          {ques.likes.length}
+                        </Button>
+                      )
                     ) : (
                       <Button
                         size="small"
@@ -90,19 +110,46 @@ export default function Question() {
                         startIcon={<ThumbUpOffAltIcon />}
                         disableElevation
                         sx={{ textTransform: 'none', mr: 2 }}
-                        onClick={() => dispatch(likeQues(ques._id))}
+                        onClick={() => alert('Please login...')}
                       >
                         {ques.likes.length}
                       </Button>
                     )}
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      startIcon={<FavoriteBorderIcon />}
-                      sx={{ textTransform: 'none' }}
-                    >
-                      Add to favorite
-                    </Button>
+                    {isAuthenticated ? (
+                      user.favorites.includes(ques._id) ? (
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<FavoriteIcon />}
+                          sx={{ textTransform: 'none' }}
+                          onClick={() => dispatch(removeFavoriteQues(ques._id))}
+                        >
+                          Remove from favorite
+                        </Button>
+                      ) : (
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<FavoriteBorderIcon />}
+                          sx={{ textTransform: 'none' }}
+                          onClick={() => dispatch(addFavoriteQues(ques._id))}
+                        >
+                          Add to favorite
+                        </Button>
+                      )
+                    ) : (
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<FavoriteBorderIcon />}
+                        sx={{ textTransform: 'none' }}
+                        onClick={() =>
+                          alert('Please login to add in your favorite list...')
+                        }
+                      >
+                        Add to favorite
+                      </Button>
+                    )}
                   </Box>
                 </CardContent>
               </Card>

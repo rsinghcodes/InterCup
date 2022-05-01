@@ -70,11 +70,15 @@ export const likeQues = createAsyncThunk(
   'question/like',
   async (questionId, thunkAPI) => {
     try {
-      const response = await axios.patch('/api/questions/like', questionId, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const response = await axios.patch(
+        '/api/questions/like',
+        { questionId },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -86,11 +90,15 @@ export const unlikeQues = createAsyncThunk(
   'question/unlike',
   async (questionId, thunkAPI) => {
     try {
-      const response = await axios.patch('/api/questions/unlike', questionId, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const response = await axios.patch(
+        '/api/questions/unlike',
+        { questionId },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
