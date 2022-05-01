@@ -133,6 +133,20 @@ router.get('/profile', authenticatedMiddleware, async (req, res) => {
   }
 });
 
+router.get('/get-favorites', authenticatedMiddleware, async (req, res) => {
+  try {
+    const favoritesQues = await User.findById(req.user._id)
+      .populate('favorites')
+      .exec();
+
+    return res.status(200).json(favoritesQues);
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
+});
+
 router.patch('/add-favorite', authenticatedMiddleware, async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(

@@ -21,7 +21,7 @@ if (NODE_ENV === 'development') {
 
 app.use('/api/admin', admin);
 app.use('/api/user', user);
-app.use('/auth/user', auth);
+app.use('/api/auth/user', auth);
 app.use('/api/questions', questions);
 app.use('/api/quiz', quiz);
 
