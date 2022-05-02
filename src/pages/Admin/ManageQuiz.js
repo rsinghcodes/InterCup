@@ -36,7 +36,7 @@ import Popup from '../../components/Popup';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import Notification from '../../components/Notification';
 import Iconify from '../../components/Iconify';
-import QuestionForm from '../../components/@adminDashboard/QuestionForm';
+import QuizPopUpForm from '../../components/@adminDashboard/QuizPopUpForm';
 
 // ----------------------------------------------------------------------
 
@@ -248,7 +248,7 @@ export default function ManageQuiz() {
                           </TableCell>
                           <TableCell align="left">{question}</TableCell>
                           <TableCell align="left">{answer}</TableCell>
-                          <TableCell align="left">{marks}</TableCell>
+                          <TableCell align="center">{marks}</TableCell>
 
                           <TableCell align="right">
                             <TableMoreMenu
@@ -287,7 +287,7 @@ export default function ManageQuiz() {
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
-        <QuestionForm
+        <QuizPopUpForm
           recordForEdit={recordForEdit}
           addOrEditQuestion={addOrEditQuestion}
         />

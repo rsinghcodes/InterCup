@@ -1,18 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Grid } from '@mui/material';
 
 import CustomCard from '../components/CustomCard';
-import { useDispatch } from 'react-redux';
-import { fetchQuizzes } from '../redux/reducers/quizSlice';
 
 const Topics = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchQuizzes());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <Box
       display="flex"
