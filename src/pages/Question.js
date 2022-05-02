@@ -116,7 +116,7 @@ export default function Question() {
                       </Button>
                     )}
                     {isAuthenticated ? (
-                      user.favorites.includes(ques._id) ? (
+                      user.favorites && user.favorites.includes(ques._id) ? (
                         <Button
                           size="small"
                           variant="outlined"

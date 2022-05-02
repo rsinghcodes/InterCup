@@ -15,8 +15,6 @@ const Favorites = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(favoritesQues);
-
   return (
     <Box
       display="flex"
@@ -33,7 +31,7 @@ const Favorites = () => {
           <Spinner />
         ) : (
           favoritesQues.map((ques, i) => (
-            <Card variant="outlined" key={i}>
+            <Card variant="outlined" key={ques._id}>
               <CardContent>
                 <Chip
                   label={
