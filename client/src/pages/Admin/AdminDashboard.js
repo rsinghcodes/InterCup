@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Card,
@@ -11,8 +11,18 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+// Redux
+import { useDispatch } from 'react-redux';
+import { getAdminProfile } from '../../redux/reducers/userSlice';
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAdminProfile());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Box
@@ -59,6 +69,11 @@ const AdminDashboard = () => {
             <CardActionArea component={Link} to="/admin/manage-quizzes">
               <Paper variant="outlined" sx={{ py: 2.5, textAlign: 'center' }}>
                 <Typography variant="h6">Quiz Questions</Typography>
+              </Paper>
+            </CardActionArea>
+            <CardActionArea component={Link} to="/topics/practice">
+              <Paper variant="outlined" sx={{ py: 2.5, textAlign: 'center' }}>
+                <Typography variant="h6">Topics</Typography>
               </Paper>
             </CardActionArea>
           </Box>

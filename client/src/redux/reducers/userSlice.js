@@ -18,7 +18,7 @@ export const getProfile = createAsyncThunk(
 );
 
 export const getAdminProfile = createAsyncThunk(
-  'user/profile',
+  'user/adminProfile',
   async (_, thunkAPI) => {
     try {
       const response = await axios.get('/api/admin/profile', {
