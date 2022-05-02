@@ -25,7 +25,6 @@ import {
 import { authSelector } from '../redux/reducers/authSlice';
 import {
   addFavoriteQues,
-  getAdminProfile,
   removeFavoriteQues,
   userSelector,
 } from '../redux/reducers/userSlice';
@@ -39,7 +38,6 @@ export default function Question() {
 
   useEffect(() => {
     dispatch(fetchQuestions());
-    dispatch(getAdminProfile());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
