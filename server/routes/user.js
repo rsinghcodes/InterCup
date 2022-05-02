@@ -123,7 +123,9 @@ router.post('/login', async (req, res) => {
 
 router.get('/profile', authenticatedMiddleware, async (req, res) => {
   try {
-    const profile = await User.findById(req.user.id).select('-password').exec();
+    const profile = await User.findById(req.user._id)
+      .select('-password')
+      .exec();
 
     return res.status(200).json(profile);
   } catch (error) {
@@ -149,13 +151,13 @@ router.get('/get-favorites', authenticatedMiddleware, async (req, res) => {
 
 router.patch('/add-favorite', authenticatedMiddleware, async (req, res) => {
   try {
-    const user = await User.findOneAndUpdate(
+    const user = await User.findByIdAndUpdate(
       req.user._id,
       {
         $push: { favorites: req.body.questionId },
       },
       { new: true }
-    );
+    ).exec();
 
     return res.status(201).json(user);
   } catch (error) {
@@ -173,7 +175,7 @@ router.patch('/delete-favorite', authenticatedMiddleware, async (req, res) => {
         $pull: { favorites: req.body.questionId },
       },
       { new: true }
-    );
+    ).exec();
 
     return res.status(201).json(user);
   } catch (error) {
