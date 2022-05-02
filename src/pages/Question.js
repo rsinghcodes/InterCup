@@ -25,6 +25,7 @@ import {
 import { authSelector } from '../redux/reducers/authSlice';
 import {
   addFavoriteQues,
+  getAdminProfile,
   removeFavoriteQues,
   userSelector,
 } from '../redux/reducers/userSlice';
@@ -38,6 +39,7 @@ export default function Question() {
 
   useEffect(() => {
     dispatch(fetchQuestions());
+    dispatch(getAdminProfile());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -115,7 +117,7 @@ export default function Question() {
                         {ques.likes.length}
                       </Button>
                     )}
-                    {isAuthenticated ? (
+                    {isAuthenticated && user.role !== 'admin' ? (
                       user.favorites && user.favorites.includes(ques._id) ? (
                         <Button
                           size="small"
@@ -144,7 +146,9 @@ export default function Question() {
                         startIcon={<FavoriteBorderIcon />}
                         sx={{ textTransform: 'none' }}
                         onClick={() =>
-                          alert('Please login to add in your favorite list...')
+                          alert(
+                            'Please login as user to add in your favorite list...'
+                          )
                         }
                       >
                         Add to favorite

@@ -17,6 +17,22 @@ export const getProfile = createAsyncThunk(
   }
 );
 
+export const getAdminProfile = createAsyncThunk(
+  'user/profile',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get('/api/admin/profile', {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const deleteUserProfile = createAsyncThunk(
   'user/deleteProfile',
   async (id, thunkAPI) => {
@@ -134,6 +150,19 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [getProfile.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = payload;
+    },
+    [getAdminProfile.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.user = payload;
+    },
+    [getAdminProfile.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAdminProfile.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.isError = true;
       state.error = payload;
