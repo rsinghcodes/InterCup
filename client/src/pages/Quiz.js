@@ -13,9 +13,10 @@ import {
 import { useParams } from 'react-router-dom';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchQuizzes, quizSelector } from '../redux/reducers/quizSlice';
+import { fetchQuizzesByTopic, quizSelector } from '../redux/reducers/quizSlice';
 // components
 import Spinner from '../components/Spinner';
+import Score from '../components/Score';
 
 const Quiz = () => {
   const { topicname } = useParams();
@@ -45,7 +46,7 @@ const Quiz = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchQuizzes());
+    dispatch(fetchQuizzesByTopic(topicname));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -76,51 +77,18 @@ const Quiz = () => {
             onSubmit={handleSubmit}
           >
             {showScore ? (
-              <>
-                <Box display="flex" justifyContent="center" alignItems="center">
-                  <img
-                    src="/assets/images/quiz-completed.jpg"
-                    alt="Quiz completed"
-                    width={250}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  component="h5"
-                  textAlign="center"
-                  fontWeight="600"
-                  color="primary"
-                  mb={2}
-                >
-                  You have completed the quiz!
-                </Typography>
-                <Typography
-                  variant="subtitle1"
-                  component="h6"
-                  textAlign="center"
-                  my={2}
-                >
-                  You scored {score} out of {quizzes.length}
-                </Typography>
-                <Typography
-                  variant="subtitle1"
-                  component="h6"
-                  textAlign="center"
-                >
-                  Thank You!!
-                </Typography>
-              </>
+              <Score score={score} quizzes={quizzes} />
             ) : (
               <FormControl variant="standard" sx={{ width: '100%' }}>
                 <Typography variant="subtitle1" component="p">
-                  Q.{currentQuestion + 1}. {quizzes[currentQuestion].question}
+                  Q.{currentQuestion + 1}. {quizzes[currentQuestion]?.question}
                 </Typography>
                 <RadioGroup
                   name="quiz"
                   value={currentAnswer}
                   onChange={handleRadioChange}
                 >
-                  {quizzes[currentQuestion].options.map((answerOption, i) => (
+                  {quizzes[currentQuestion]?.options.map((answerOption, i) => (
                     <FormControlLabel
                       key={i}
                       value={answerOption}

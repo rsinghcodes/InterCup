@@ -43,7 +43,7 @@ const TABLE_HEAD = [
   { id: 'topic', label: 'Topic Name', alignRight: false },
   { id: 'question', label: 'Question', alignRight: false },
   { id: 'answer', label: 'Answer', alignRight: false },
-  { id: 'marks', label: 'Marks', alignRight: false },
+  { id: 'likes', label: 'Upvotes', alignRight: false },
   { id: '' },
 ];
 
@@ -234,7 +234,7 @@ export default function ManageQuestion() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { _id, topic, question, answer, marks } = row;
+                      const { _id, topic, question, answer, likes } = row;
 
                       return (
                         <TableRow hover key={_id} tabIndex={-1}>
@@ -245,7 +245,7 @@ export default function ManageQuestion() {
                           </TableCell>
                           <TableCell align="left">{question}</TableCell>
                           <TableCell align="left">{answer}</TableCell>
-                          <TableCell align="left">{marks}</TableCell>
+                          <TableCell align="center">{likes.length}</TableCell>
 
                           <TableCell align="right">
                             <TableMoreMenu

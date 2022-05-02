@@ -18,6 +18,18 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:topicname', async (req, res) => {
+  try {
+    const quiz = await Quiz.find({ topic: req.params.topicname });
+
+    return res.status(200).json(quiz);
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Server Error',
+    });
+  }
+});
+
 router.post('/new', authenticatedMiddleware, async (req, res) => {
   try {
     if (req.user.role == 'admin') {

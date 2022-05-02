@@ -13,6 +13,18 @@ export const fetchQuizzes = createAsyncThunk(
   }
 );
 
+export const fetchQuizzesByTopic = createAsyncThunk(
+  'quiz/fetchByTopic',
+  async (topicname, thunkAPI) => {
+    try {
+      const response = await axios.get(`/api/quiz/${topicname}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const createQuiz = createAsyncThunk(
   'quiz/new',
   async (questionData, thunkAPI) => {
@@ -79,6 +91,14 @@ const quizSlice = createSlice({
       state.quizzes = payload;
     },
     [fetchQuizzes.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [fetchQuizzesByTopic.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.quizzes = payload;
+    },
+    [fetchQuizzesByTopic.pending]: (state) => {
       state.isLoading = true;
     },
     [createQuiz.fulfilled]: (state, { payload }) => {
