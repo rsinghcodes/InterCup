@@ -15,7 +15,7 @@ import setAuthToken from './utils/setAuthToken';
 // Redux
 import { store } from './redux/store';
 import { logout, setCurrentUser } from './redux/reducers/authSlice';
-import { getProfile } from './redux/reducers/userSlice';
+import { getAdminProfile, getProfile } from './redux/reducers/userSlice';
 // pages
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
@@ -44,7 +44,12 @@ if (localStorage.token) {
   const decoded = jwt_decode(token);
 
   store.dispatch(setCurrentUser(decoded));
-  store.dispatch(getProfile());
+
+  if (decoded.role === 'admin') {
+    store.dispatch(getAdminProfile());
+  } else {
+    store.dispatch(getProfile());
+  }
 
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {

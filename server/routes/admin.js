@@ -79,7 +79,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/profile', authenticatedMiddleware, async (req, res) => {
   try {
-    const profile = await Admin.findById(req.user.id)
+    const profile = await Admin.findById(req.user._id)
       .select('-password')
       .exec();
 
