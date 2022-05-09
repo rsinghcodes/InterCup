@@ -75,22 +75,12 @@ const Profile = () => {
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="subtitle1" component="p">
-                    Global Rank
+                    Quiz Highest Score
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="subtitle1" component="p">
-                    {user.global_rank}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="subtitle1" component="p">
-                    Score
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="subtitle1" component="p">
-                    {user.global_rank}
+                    {user.highest_score}
                   </Typography>
                 </Grid>
                 {user.profession && (

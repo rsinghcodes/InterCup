@@ -17,25 +17,27 @@ const Dashboard = () => {
 
   return (
     <>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        py="1.5rem"
-        flexDirection="column"
-      >
-        <Typography variant="h5" component="h5" fontWeight="600">
-          Welcome, {user.fullname}
-        </Typography>
-        <Box textAlign="center">
-          <Chip
-            label={`Global Rank: ${user.global_rank}`}
-            color="primary"
-            sx={{ my: '1rem', mr: '0.5rem' }}
-          />
-          <Chip label="Highest Score: 487" color="primary" variant="outlined" />
+      {user && (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          py="1.5rem"
+          flexDirection="column"
+        >
+          <Typography variant="h5" component="h5" fontWeight="600">
+            Welcome, {user.fullname}
+          </Typography>
+          <Box textAlign="center">
+            <Chip
+              label={`Highest Score: ${user.highest_score}`}
+              color="primary"
+              variant="outlined"
+              sx={{ my: '1rem', mr: '0.5rem' }}
+            />
+          </Box>
         </Box>
-      </Box>
+      )}
       <Divider />
       <Topics />
     </>
