@@ -2,6 +2,7 @@ const express = require('express');
 
 const authenticatedMiddleware = require('../middleware/authenticated');
 const Quiz = require('../models/Quiz');
+const User = require('../models/User');
 const { validateQuestionInput } = require('../validation/validation');
 
 const router = express.Router();
@@ -118,6 +119,24 @@ router.put('/:id', authenticatedMiddleware, async (req, res) => {
         error: 'Action not allowed',
       });
     }
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Server Error',
+    });
+  }
+});
+
+router.patch('/increase-score', authenticatedMiddleware, async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $inc: { highest_score: req.body.highest_score },
+      },
+      { new: true }
+    ).exec();
+
+    return res.status(201).json(user);
   } catch (error) {
     return res.status(500).json({
       error: 'Server Error',

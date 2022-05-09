@@ -1,7 +1,16 @@
 import { Box, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { increaseScore } from '../redux/reducers/userSlice';
 
 const Score = ({ score, quizzes }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(increaseScore(score));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Box display="flex" justifyContent="center" alignItems="center">

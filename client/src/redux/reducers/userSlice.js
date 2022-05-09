@@ -125,6 +125,27 @@ export const removeFavoriteQues = createAsyncThunk(
   }
 );
 
+export const increaseScore = createAsyncThunk(
+  'user/increaseScore',
+  async (highest_score, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        '/api/quiz/increase-score',
+        { highest_score },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -210,6 +231,19 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
       state.user = payload;
+    },
+    [increaseScore.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.user = payload.user;
+    },
+    [increaseScore.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [increaseScore.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = payload;
     },
   },
 });

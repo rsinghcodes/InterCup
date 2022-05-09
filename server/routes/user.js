@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ email: 'Email already exists' });
     }
 
-    const { fullname, email, password, global_rank, profession, college } =
+    const { fullname, email, password, highest_score, profession, college } =
       req.body;
 
     // Save mentee details
@@ -34,7 +34,7 @@ router.post('/register', async (req, res) => {
       fullname,
       email,
       password,
-      global_rank,
+      highest_score,
       profession,
       college,
     });

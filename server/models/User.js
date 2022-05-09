@@ -23,7 +23,7 @@ const userSchema = new Schema({
     type: Boolean,
     default: true,
   },
-  global_rank: {
+  highest_score: {
     type: Number,
     default: 0,
   },
