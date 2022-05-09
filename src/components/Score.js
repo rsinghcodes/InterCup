@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
+// Redux
 import { useDispatch } from 'react-redux';
 import { increaseScore } from '../redux/reducers/userSlice';
+import { authSelector } from '../redux/reducers/authSlice';
 
 const Score = ({ score, quizzes }) => {
   const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector(authSelector);
 
   useEffect(() => {
-    dispatch(increaseScore(score));
+    if (isAuthenticated) {
+      dispatch(increaseScore(score));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
