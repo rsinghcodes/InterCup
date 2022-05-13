@@ -46,7 +46,7 @@ const TABLE_HEAD = [
   { id: 'fullname', label: 'Full Name', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'profession', label: 'Profession', alignRight: false },
-  { id: 'global_rank', label: 'Global Rank', alignRight: false },
+  { id: 'highest_score', label: 'Highest Score', alignRight: false },
   { id: 'isVerified', label: 'Verified', alignRight: false },
   { id: 'isAccess', label: 'Status', alignRight: false },
   { id: '' },
@@ -244,7 +244,7 @@ export default function ManageUser() {
                         fullname,
                         email,
                         profession,
-                        global_rank,
+                        highest_score,
                         isVerified,
                         isAccess,
                       } = row;
@@ -258,7 +258,7 @@ export default function ManageUser() {
                           </TableCell>
                           <TableCell align="left">{email}</TableCell>
                           <TableCell align="left">{profession}</TableCell>
-                          <TableCell align="left">{global_rank}</TableCell>
+                          <TableCell align="left">{highest_score}</TableCell>
                           <TableCell align="left">
                             {isVerified ? 'Yes' : 'No'}
                           </TableCell>
