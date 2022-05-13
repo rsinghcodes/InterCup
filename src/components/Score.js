@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { increaseScore } from '../redux/reducers/userSlice';
 import { authSelector } from '../redux/reducers/authSlice';
 
