@@ -184,7 +184,7 @@ export default function ManageQuestion() {
 
   return (
     <>
-      <Box my={2}>
+      <Box>
         <Container>
           <Stack
             direction="row"

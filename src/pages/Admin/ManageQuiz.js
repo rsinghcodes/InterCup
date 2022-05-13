@@ -185,7 +185,7 @@ export default function ManageQuiz() {
 
   return (
     <>
-      <Box my={2}>
+      <Box>
         <Container>
           <Stack
             direction="row"
