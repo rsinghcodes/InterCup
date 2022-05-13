@@ -1,41 +1,22 @@
-import { lazy, Suspense } from 'react';
-import { Container, createTheme, ThemeProvider } from '@mui/material';
-import { Route, Routes } from 'react-router-dom';
+import { Suspense, useMemo } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material';
 import jwt_decode from 'jwt-decode';
 import { ErrorBoundary } from 'react-error-boundary';
+// routes
+import Router from './routes';
+// theme
+import palette from './theme/palette';
+import shadows from './theme/shadows';
 // components
-import Header from './components/Header';
-import Footer from './components/Footer';
 import Spinner from './components/Spinner';
 import ScrollToTop from './components/ScrollToTop';
 import ErrorFallback from './components/ErrorFallback';
 // utils
-import RequireAuth from './utils/RequireAuth';
 import setAuthToken from './utils/setAuthToken';
 // Redux
 import { store } from './redux/store';
 import { logout, setCurrentUser } from './redux/reducers/authSlice';
 import { getAdminProfile, getProfile } from './redux/reducers/userSlice';
-// pages
-const Home = lazy(() => import('./pages/Home'));
-const Login = lazy(() => import('./pages/Login'));
-const Register = lazy(() => import('./pages/Register'));
-const Topics = lazy(() => import('./pages/Topics'));
-const Quiz = lazy(() => import('./pages/Quiz'));
-const Question = lazy(() => import('./pages/Question'));
-const Favorites = lazy(() => import('./pages/Favorites'));
-const NotFound = lazy(() => import('./pages/NotFound'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const Profile = lazy(() => import('./pages/Profile'));
-const EditProfile = lazy(() => import('./pages/EditProfile'));
-const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
-// Admin
-const AdminLogin = lazy(() => import('./pages/Admin/AdminLogin'));
-const ManageUser = lazy(() => import('./pages/Admin/ManageUser'));
-const ManageQuestion = lazy(() => import('./pages/Admin/ManageQuestion'));
-const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard'));
-const ManageQuiz = lazy(() => import('./pages/Admin/ManageQuiz'));
-const QuizForm = lazy(() => import('./pages/Admin/QuizForm'));
 
 if (localStorage.token) {
   const token = localStorage.token;
@@ -59,76 +40,27 @@ if (localStorage.token) {
 }
 
 function App() {
-  const theme = createTheme({
-    typography: {
-      fontFamily: ['Public Sans', 'sans-serif'].join(','),
-    },
-    palette: {
-      primary: { main: '#0070F3' },
-    },
-  });
+  const themeOptions = useMemo(
+    () => ({
+      palette,
+      shadows,
+      shape: { borderRadius: 8 },
+      typography: {
+        fontFamily: ['Public Sans', 'sans-serif'].join(','),
+      },
+    }),
+    []
+  );
+
+  const theme = createTheme(themeOptions);
 
   return (
     <ThemeProvider theme={theme}>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <ScrollToTop />
-        <Header />
-        <Container>
-          <Suspense fallback={<Spinner />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="*" element={<NotFound />} />
-              <Route element={<RequireAuth />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Route>
-              <Route element={<RequireAuth />}>
-                <Route path="/user/profile" element={<Profile />} />
-              </Route>
-              <Route element={<RequireAuth />}>
-                <Route path="/user/edit-profile" element={<EditProfile />} />
-              </Route>
-              <Route element={<RequireAuth />}>
-                <Route path="/user/favorites" element={<Favorites />} />
-              </Route>
-              <Route path="/topics/practice/" element={<Topics />} />
-              <Route path="/user/accounts/login" element={<Login />} />
-              <Route path="/user/accounts/register" element={<Register />} />
-              <Route
-                path="/auth/user/:userId/verify/:tokenId"
-                element={<VerifyEmail />}
-              />
-              <Route
-                path="/topics/practice/:topicname/quiz"
-                element={<Quiz />}
-              />
-              <Route
-                path="/topics/practice/:topicname/theory"
-                element={<Question />}
-              />
-
-              <Route path="/admin/account/login" element={<AdminLogin />} />
-              <Route element={<RequireAuth />}>
-                <Route path="/admin/manage-users" element={<ManageUser />} />
-              </Route>
-              <Route element={<RequireAuth />}>
-                <Route
-                  path="/admin/manage-questions"
-                  element={<ManageQuestion />}
-                />
-              </Route>
-              <Route element={<RequireAuth />}>
-                <Route path="/admin/manage-quizzes" element={<ManageQuiz />} />
-              </Route>
-              <Route element={<RequireAuth />}>
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              </Route>
-              <Route element={<RequireAuth />}>
-                <Route path="/admin/quiz/new" element={<QuizForm />} />
-              </Route>
-            </Routes>
-          </Suspense>
-        </Container>
-        <Footer />
+        <Suspense fallback={<Spinner />}>
+          <Router />
+        </Suspense>
       </ErrorBoundary>
     </ThemeProvider>
   );

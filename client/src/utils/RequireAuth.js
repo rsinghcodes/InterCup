@@ -1,14 +1,14 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 // Redux
 import { useSelector } from 'react-redux';
 import { authSelector } from '../redux/reducers/authSlice';
 
-const RequireAuth = () => {
+const RequireAuth = ({ component: RouteComponent }) => {
   const { isAuthenticated } = useSelector(authSelector);
 
   return isAuthenticated ? (
-    <Outlet />
+    <RouteComponent />
   ) : (
     <Navigate to="/user/accounts/login" replace />
   );
