@@ -1,8 +1,8 @@
 <h1 align="center">InterCup</h1>
 
-> **InterCup is an interview preparation platform, where users can check their knowledge on a specific topic or can prepare for interview questions.**
+<p align="center"><b>InterCup</b> is an interview preparation platform, where users can check their knowledge on a specific topic or can prepare for interview questions.</p>
 
-![InterCup App preview](https://user-images.githubusercontent.com/67682451/174601965-a7f8024f-4042-44d5-b7fc-9bae652ca06c.png)
+![InterCup App preview](https://user-images.githubusercontent.com/67682451/180660845-0faae76d-766d-4e16-9661-8ea8e29e49d2.svg)
 
 ## Project Objectives
 
@@ -15,11 +15,19 @@ world. The factors behind the motivation of this system are:
 - Creating a user-friendly interactive space where students and working professionals can easily prepare for any difficult technical interviews.
 - To develop a good attitude and confidence for problem solving and situation handling.
 
+
+## :video_game: Features & Functionality
+
+![Admin Dashboard](https://user-images.githubusercontent.com/67682451/180660739-749581f7-1963-48bb-ab83-9dffd169baf5.svg)
+
+
 ## 🖼️ Screenshots
 
 **Home Page**
 
 ![image1](https://user-images.githubusercontent.com/67682451/165234052-470f4143-13f2-44f8-98d1-d58150c0456f.png)
+
+**Welcome Page**
 
 ![image2](https://user-images.githubusercontent.com/67682451/165234340-e6e54a0a-f1fd-4fe1-aeed-74671ac1cdc2.png)
 
