@@ -18,8 +18,105 @@ world. The factors behind the motivation of this system are:
 
 ## :video_game: Features & Functionality
 
+**User**
+
+- User can register.
+- User can login.
+- Manage Account - Delete Account or Update Full Name or password.
+- View all interview questions.
+- Attempt quizzes.
+- Like on published interview questions.
+- Add to Favorite list
+
+**Admin**
+
+- Admin can login with credentials
+- Admin can create, read, delete and update user data ( Manage Account - Delete Account or Update Full Name or password).
+- Admin can create, read, delete and update quizzes.
+- Admin can create, read, delete and update questions.
+- View all interview questions.
+- Attempt quizzes.
+
 ![Admin Dashboard](https://user-images.githubusercontent.com/67682451/180660739-749581f7-1963-48bb-ab83-9dffd169baf5.svg)
 
+## 🚧 Technology Stack Used
+
+- **Server Enviornment** - Node.js
+- **Backend Framework** - Expressjs
+- **Frontend** - ReactJS, Redux (State management), MUI
+- **Database** - MongoDB in conjunction with Mongoose
+- **Cloud database service** - MongoDB Atlas
+- Email verification using **nodemailer**
+- **Deployment** - Heroku (Backend) & Netlify (Frontend)
+
+## ⬇️ Installation & Set Up
+
+**Step :one::** Clone this repository to your local machine
+
+```
+git clone https://github.com/rsinghcodes/InterCup.git
+```
+
+**Step :two::** Navigate to server directory.
+
+```
+cd server
+```
+
+**Step :three::** Create a `.env` file in the server directory of the project. Add environment-specific variables in the form of `NAME=VALUE`. For example:
+
+```
+BASE_URL=http://localhost:3000
+EMAIL_PORT=...
+HOST=...
+JWT_SECRET=...
+MONGODB=...
+NODE_ENV=development
+SECURE=true
+SERVICE=...
+USER=...
+PASS=...
+PORT=4000
+```
+
+**Step :four::** Install the dependencies.
+
+```
+npm install
+```
+
+**Step :five::** Start server in development mode.
+
+```
+npm run dev
+```
+
+**Server started at [http://localhost:4000](http://localhost:4000).**
+
+**Step :six::** Open another new terminal, navigate to client directory.
+
+```
+cd client
+```
+
+**Step :seven::** Install all the dependencies.
+
+```
+npm install
+```
+
+**Step :eight::** Now start Frontend application
+
+```
+npm start
+```
+
+Your app is ready to be run! ✨✨\
+**Open [http://localhost:3000](http://localhost:3000) to view it in the browser.**
+
+## Application Status
+
+Application has been deployed successfully🎉! Check out [here 🔗](https://intercup.netlify.app/).
 
 ## 🖼️ Screenshots
 
@@ -43,16 +140,4 @@ world. The factors behind the motivation of this system are:
 
 ![image5](https://user-images.githubusercontent.com/67682451/174603182-87377b30-9de0-4675-a5a1-f56bf7384baf.png)
 
-## 🚧 Technology Stack Used
-
-- **Server Enviornment** - Node.js
-- **Backend Framework** - Expressjs
-- **Frontend** - ReactJS, Redux (State management), MUI
-- **Database** - MongoDB in conjunction with Mongoose
-- **Cloud database service** - MongoDB Atlas
-- Email verification using **nodemailer**
-- **Deployment** - Heroku (Backend) & Netlify (Frontend)
-
-## Application Status
-
-Application has been deployed successfully🎉! Check out [here 🔗](https://intercup.netlify.app/).
+***Glad to see you here! Show some love by [starring](https://github.com/rsinghcodes/InterCup/) this repo.***
