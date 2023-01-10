@@ -2,6 +2,7 @@ import { Suspense, useMemo } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 import jwt_decode from 'jwt-decode';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Toaster } from 'react-hot-toast';
 // routes
 import Router from './routes';
 // theme
@@ -58,6 +59,13 @@ function App() {
     <ThemeProvider theme={theme}>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <ScrollToTop />
+        <Toaster
+          toastOptions={{
+            style: {
+              fontFamily: ['Public Sans', 'sans-serif'].join(','),
+            },
+          }}
+        />
         <Suspense fallback={<Spinner />}>
           <Router />
         </Suspense>
