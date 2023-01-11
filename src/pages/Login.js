@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Card, Container, Link, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import toast from 'react-hot-toast';
 
 import { useSelector } from 'react-redux';
 import { authSelector } from '../redux/reducers/authSlice';
 
 import LoginForm from '../components/LoginForm';
-import Notification from '../components/Notification';
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
@@ -30,19 +30,10 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 const Login = () => {
   const { isError, error } = useSelector(authSelector);
-  const [notify, setNotify] = useState({
-    isOpen: false,
-    message: '',
-    type: 'success',
-  });
 
   useEffect(() => {
     if (isError && error.message) {
-      setNotify({
-        isOpen: true,
-        message: error.message,
-        type: 'error',
-      });
+      toast.error(error.message, { duration: 2500 });
     }
   }, [isError, error]);
 
@@ -51,7 +42,6 @@ const Login = () => {
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }} elevation={0}>
         <img src="/assets/images/illustration_login.png" alt="login" />
       </SectionStyle>
-      <Notification notify={notify} setNotify={setNotify} />
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import toast from 'react-hot-toast';
 // material
 import { styled } from '@mui/material/styles';
 import { Box, Card, Link, Container, Typography } from '@mui/material';
@@ -8,7 +9,6 @@ import { useSelector } from 'react-redux';
 import { authSelector } from '../redux/reducers/authSlice';
 
 import RegisterForm from '../components/RegisterForm';
-import Notification from '../components/Notification';
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
@@ -33,19 +33,10 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Register() {
   const { message, isSuccess } = useSelector(authSelector);
-  const [notify, setNotify] = useState({
-    isOpen: false,
-    message: '',
-    type: 'success',
-  });
 
   useEffect(() => {
     if (isSuccess) {
-      setNotify({
-        isOpen: true,
-        message: message,
-        type: 'success',
-      });
+      toast.success(message, { duration: 2500 });
     }
   }, [isSuccess, message]);
 
@@ -54,7 +45,6 @@ export default function Register() {
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }} elevation={0}>
         <img alt="register" src="/assets/images/illustration_login.png" />
       </SectionStyle>
-      <Notification notify={notify} setNotify={setNotify} />
       <Container>
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
