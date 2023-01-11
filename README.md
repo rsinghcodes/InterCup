@@ -40,7 +40,7 @@ world. The factors behind the motivation of this system are:
 
 ## 🚧 Technology Stack Used
 
-- **Server Enviornment** - Node.js
+- **Server Environment** - Node.js
 - **Backend Framework** - Express.js
 - **DevOps** - Docker
 - **Frontend** - React.js, Redux (State management), MUI
