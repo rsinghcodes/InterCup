@@ -15,7 +15,6 @@ world. The factors behind the motivation of this system are:
 - Creating a user-friendly interactive space where students and working professionals can easily prepare for any difficult technical interviews.
 - To develop a good attitude and confidence for problem solving and situation handling.
 
-
 ## :video_game: Features & Functionality
 
 **User**
@@ -42,12 +41,13 @@ world. The factors behind the motivation of this system are:
 ## 🚧 Technology Stack Used
 
 - **Server Enviornment** - Node.js
-- **Backend Framework** - Expressjs
-- **Frontend** - ReactJS, Redux (State management), MUI
+- **Backend Framework** - Express.js
+- **DevOps** - Docker
+- **Frontend** - React.js, Redux (State management), MUI
 - **Database** - MongoDB in conjunction with Mongoose
 - **Cloud database service** - MongoDB Atlas
 - Email verification using **nodemailer**
-- **Deployment** - Heroku (Backend) & Netlify (Frontend)
+- **Deployment** - Render (Backend) & Netlify (Frontend)
 
 ## ⬇️ Installation & Set Up
 
@@ -57,55 +57,13 @@ world. The factors behind the motivation of this system are:
 git clone https://github.com/rsinghcodes/InterCup.git
 ```
 
-**Step :two::** Navigate to server directory.
-
-```
-cd server
-```
-
-**Step :three::** Create a `.env` file in the server directory of the project. Add environment-specific variables in the form of `NAME=VALUE`. For example:
-
-```
-BASE_URL=http://localhost:3000
-EMAIL_PORT=...
-HOST=...
-JWT_SECRET=...
-MONGODB=...
-NODE_ENV=development
-SECURE=true
-SERVICE=...
-USER=...
-PASS=...
-PORT=4000
-```
-
-**Step :four::** Install the dependencies.
+**Step :two::** Install all the dependencies.
 
 ```
 npm install
 ```
 
-**Step :five::** Start server in development mode.
-
-```
-npm run dev
-```
-
-**Server started at [http://localhost:4000](http://localhost:4000).**
-
-**Step :six::** Open another new terminal, navigate to client directory.
-
-```
-cd client
-```
-
-**Step :seven::** Install all the dependencies.
-
-```
-npm install
-```
-
-**Step :eight::** Now start Frontend application
+**Step :three::** Now start the application
 
 ```
 npm start
@@ -140,4 +98,4 @@ Application has been deployed successfully🎉! Check out [here 🔗](https://in
 
 ![image5](https://user-images.githubusercontent.com/67682451/174603182-87377b30-9de0-4675-a5a1-f56bf7384baf.png)
 
-***Glad to see you here! Show some love by [starring](https://github.com/rsinghcodes/InterCup/) this repo.***
+**_Glad to see you here! Show some love by [starring](https://github.com/rsinghcodes/InterCup/) this repo._**
