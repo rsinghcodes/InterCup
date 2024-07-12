@@ -49,6 +49,9 @@ world. The factors behind the motivation of this system are:
 - Email verification using **nodemailer**
 - **Deployment** - Render (Backend) & Netlify (Frontend)
 
+## 🗄 Backend Application link
+[`https://github.com/rsinghcodes/intercup-backend`](https://github.com/rsinghcodes/intercup-backend)
+
 ## ⬇️ Installation & Set Up
 
 **Step :one::** Clone this repository to your local machine
@@ -98,4 +101,4 @@ Application has been deployed successfully🎉! Check out [here 🔗](https://in
 
 ![image5](https://user-images.githubusercontent.com/67682451/174603182-87377b30-9de0-4675-a5a1-f56bf7384baf.png)
 
-**_Glad to see you here! Show some love by [starring](https://github.com/rsinghcodes/InterCup/) this repo._**
+**_Glad to see you here! Show some love by [starring](https://github.com/rsinghcodes/InterCup/) ⭐ this repo._**
